@@ -1,0 +1,128 @@
+﻿@page "/Game"
+@using BlazorApp.Controller.Enums
+@using BlazorApp.Controller.Factory
+
+@inject Identification identification
+
+<h3>Game</h3>
+
+@if (identification.Player != null)
+{
+    @message
+    <style>
+        .tile {
+            background: red;
+            display: flex;
+            justify-content: center;
+
+            border: 1px solid;
+            height: 50px;
+            font-size: 0.8em;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Your board : </p>
+                @((MarkupString)Debug())
+            </div>
+            <div class="col">
+                <p>Ennemy board :</p>
+                @((MarkupString)Rebug())
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <p>IA board : </p>
+                @((MarkupString)Ia.Debug())
+            </div>
+            <div class="col">
+                <p>Ennemy board :</p>
+                @((MarkupString)Rebug())
+            </div>
+        </div>
+        <div class="row">
+            <input @bind="X" placeholder="0"/>
+            <input @bind="Y" placeholder="0"/>
+            <button class="btn btn-primary" @onclick="Shoot">SHOOT</button>
+        </div>
+    </div>
+}
+
+@code {
+    public string X;
+    public string Y;
+    private string message;
+    public IA Ia = new IA();
+
+    public void Shoot()
+    {
+        Tile t = TileFactory.Tile(int.Parse(X), int.Parse(Y));
+        if (!Utility.Contains(t, identification.Player.FiringBoard.Tiles))
+        {
+            message = "Coordinate not valid";
+        }
+        else
+        {
+            identification.Player.FiringBoard.Tiles[Utility.Index(t, identification.Player.FiringBoard.Tiles)].OccupationType = Occupation.Battleship;
+        }
+    }
+
+
+
+    public string Debug()
+    {
+        string temp = "<div class=\"container\" style=\"width: 400px\">";
+        int index = 0;
+        for(int h = 0; h < identification.Player.GameBoard.Height; h++)
+        {
+            temp += "<div class=\"row\">";
+            for(int w = 0; w < identification.Player.GameBoard.Width; w++)
+            {
+                index = w * 8 + h;
+                string color = "background-color: red;";
+                if(identification.Player.GameBoard.Tiles[index].OccupationType != Occupation.Empty)
+                {
+                    color = "background-color: blue;";
+                }
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(identification.Player.GameBoard.Tiles[index].OccupationType)}</div>";
+            }
+            temp += "</div>";
+        }
+        temp += "</div>";
+        return temp;
+    }
+
+    public string Rebug()
+    {
+        string temp = "<div class=\"container\" style=\"width: 400px; flex-wrap: nowrap; \">";
+        int index = 0;
+        for(int h = 0; h < identification.Player.FiringBoard.Height; h++)
+        {
+            temp += "<div class=\"row\">";
+            for(int w = 0; w < identification.Player.FiringBoard.Width; w++)
+            {
+                index = w * 8 + h;
+                string color = "background-color: red;";
+                if(identification.Player.FiringBoard.Tiles[index].OccupationType != Occupation.Empty)
+                {
+                    color = "background-color: blue;";
+                }
+                Tile t = identification.Player.FiringBoard.Tiles[index];
+                string toShow = "";
+                if (t.OccupationType == Occupation.Empty)
+                {
+                    toShow = t.X + "/" + t.Y;
+                }
+                else
+                {
+                    toShow = Utility.DescriptionAttr(t.OccupationType);
+                }
+                temp += $"<div class=\"col tile\" >{toShow}</div>";
+            }
+            temp += "</div>";
+        }
+        temp += "</div>";
+        return temp;
+    }
+}

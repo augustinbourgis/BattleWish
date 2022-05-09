@@ -1,0 +1,38 @@
+﻿@page "/LogIn"
+@using BlazorApp.Controller;
+
+@inject Identification identification
+
+<div>
+    <p>Enter your login :</p>
+    <input type="text" @bind="@identification.Login" @oninput="OnInputLogin"/>
+    <p>Enter your password</p>
+    <input type="password" @bind="@identification.Password" @oninput="OnInputPass"/>
+</div>
+
+<button class="btn btn-primary" @onclick="IdentificationConnect">Connect</button>
+<button class="btn btn-primary" @onclick="IdentificationDisconnect">Disconnect</button>
+
+<p>Etat connexion : @identification.Connected</p>
+
+@code {
+    private void OnInputLogin(ChangeEventArgs changeEvent)
+    {
+        identification.Login = (string)changeEvent.Value;
+    }
+
+    private void OnInputPass(ChangeEventArgs changeEvent)
+    {
+        identification.Password = (string)changeEvent.Value;
+    }
+
+    private void IdentificationConnect()
+    {
+        identification.LogIn();
+    }
+
+    private void IdentificationDisconnect()
+    {
+        identification.Deconnect();
+    }
+}

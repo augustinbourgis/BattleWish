@@ -1,0 +1,259 @@
+﻿@page "/Map"
+@using BlazorApp.Controller.Enums;
+@using BlazorApp.Controller.Factory;
+@using BlazorApp.Controller.Ships;
+
+@inject Identification identification
+
+Etat connexion : @identification.Connected
+@{
+    if (identification.Connected)
+    {
+        <style>
+            div{
+                font-size: 0.8em;
+            }
+        </style>
+        if (s != null)
+        {
+            <div>
+                @s.Name;
+                @s.GetType().ToString();
+                @s.TopLeft.X;
+                @s.TopLeft.Y;
+                @s.OrientationType
+            </div>
+        }
+        <p>@gb.Boats placed</p>
+        if (gb.Boats == 6)
+        {
+            <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
+        }
+        @message
+        <div>
+            <button class="btn btn-primary" id="aa" @onclick="actionTest">Click me</button>
+            <button class="btn btn-primary" @onclick="Right">🡢</button>
+            <button class="btn btn-primary" @onclick="Bottom">🡣</button>
+            <button class="btn btn-primary" @onclick="Left">🡠</button>
+            <button class="btn btn-primary" @onclick="Top">🡡</button>
+            <button class="btn btn-primary" @onclick="Rotate">Rotate</button>
+            <button class="btn btn-primary" @onclick="Reset">Reset</button>
+        </div>
+        <div>
+            <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
+            <button class="btn btn-primary" @onclick="Cruiser">Cruiser</button>
+            <button class="btn btn-primary" @onclick="Submarine">Submarine</button>
+            <button class="btn btn-primary" @onclick="Battleship">Battleship</button>
+            <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
+            <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
+        </div>
+        @((MarkupString)@Debug())
+    }
+}
+
+
+@code{
+    public Ship s { get; set; }
+    public string message = "";
+    public static Player p = PlayerFactory.Player();
+    public List<Ship> placed = new List<Ship>();
+    public GameBoard gb { get; set; } = p.GameBoard;
+
+    public void Reset()
+    {
+        gb.GenerateTiles();
+        gb.Boats = 0;
+    }
+
+    public void Validate()
+    {
+        identification.Player = PlayerFactory.Player(identification.Login);
+        identification.Player.GameBoard = gb;
+        message = "Validation completed !";
+    }
+
+    public void Right()
+    {
+        message = "";
+        Ship save = s.Clone("");
+        if (!gb.Right(s))
+        {
+            message = "Right not permitted";
+            p.Ships.Remove(s);
+            p.Ships.Add(save);
+            gb.Remove(s);
+            gb.Remove(save);
+            placed.Remove(s);
+
+            s = save;
+        }
+        actionTest();
+
+    }
+
+    public void Left()
+    {
+        message = "";
+        Ship save = s.Clone("");
+        if (!gb.Left(s))
+        {
+            message = "Left not permitted";
+            p.Ships.Remove(s);
+            p.Ships.Add(save);
+            gb.Remove(s);
+            gb.Remove(save);
+            placed.Remove(s);
+
+            s = save;
+        }
+        actionTest();
+
+    }
+
+    public void Top()
+    {
+        Ship save = s.Clone("");
+        message = "";
+        if (!gb.Top(s))
+        {
+            message = "Top not permitted";
+            p.Ships.Remove(s);
+            p.Ships.Add(save);
+            gb.Remove(s);
+            gb.Remove(save);
+            placed.Remove(s);
+            s = save;
+        }
+        actionTest();
+
+    }
+
+    public void Rotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s))
+        {
+            message = "Rotate not permitted";
+            s.OrientationType = save;
+            s.GenerateTiles();
+        }
+        actionTest();
+    }
+
+    public void Refresh()
+    {
+        gb.GenerateTiles();
+        foreach (Ship s in placed)
+        {
+            gb.Remove(s);
+            gb.Add(s);
+        }
+    }
+
+    public void Bottom()
+    {
+        Ship save = s.Clone("");
+        message = "";
+        if (!gb.Bottom(s))
+        {
+            message = "Bottom not permitted";
+            p.Ships.Remove(s);
+            p.Ships.Add(save);
+            gb.Remove(s);
+            gb.Remove(save);
+            placed.Remove(s);
+            s = save;
+        }
+        actionTest();
+    }
+
+    public string Debug()
+    {
+        string temp = "<div class=\"container\" style=\"width: 800px\">";
+        int index = 0;
+        for(int h = 0; h < gb.Height; h++)
+        {
+            temp += "<div class=\"row\">";
+            for(int w = 0; w < gb.Width; w++)
+            {
+                index = w * gb.Width + h;
+                string color = "background-color: red;";
+                if(gb.Tiles[index].OccupationType == Occupation.Empty)
+                {
+                    color = "background-color: red;";
+                }
+                else
+                {
+                    if (gb.Tiles[index].OccupationType == Occupation.Near)
+                    {
+                        color = "background-color: blue;";
+                    }
+                    else
+                    {
+                        color = "background-color: green;";
+                    }
+                }
+                Tile t = gb.Tiles[index];
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:25px\">{t.X}/{t.Y}</div>";
+            }
+            temp += "</div>";
+        }
+        temp += "</div>";
+        return temp;
+    }
+
+    public void actionTest()
+    {
+        gb.Add(s);
+        if (!Utility.Contains(s, placed)) placed.Add(s);
+        Refresh();
+    }
+
+    public void Destroyer()
+    {
+        s = Get("BlazorApp.Controller.Ships.Destroyer");
+        actionTest();
+    }
+
+    public void Cruiser()
+    {
+        s = Get("BlazorApp.Controller.Ships.Cruiser");
+        actionTest();
+    }
+
+    public void Submarine()
+    {
+        s = Get("BlazorApp.Controller.Ships.Submarine");
+        actionTest();
+    }
+
+    public void Battleship()
+    {
+        s = Get("BlazorApp.Controller.Ships.Battleship");
+        actionTest();
+    }
+
+    public void Carrier()
+    {
+        s = Get("BlazorApp.Controller.Ships.Carrier");
+        actionTest();
+    }
+
+    public void Titanic()
+    {
+        s = Get("BlazorApp.Controller.Ships.Titanic");
+        actionTest();
+    }
+
+    public Ship Get(string type)
+    {
+        foreach (Ship ship in p.Ships)
+        {
+            if (ship.GetType().ToString() == type)
+            {
+                return ship;
+            } 
+        }
+        return null;
+    }
+}
