@@ -6595,11 +6595,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\33760\\Documents\\CNAM\\Titre concepteur informatique parcours système d'information\\NFP121 Laurent WIESER (Adv Prog)\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+      "projectUniqueName": "C:\\Users\\33760\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
       "projectName": "BlazorApp",
-      "projectPath": "C:\\Users\\33760\\Documents\\CNAM\\Titre concepteur informatique parcours système d'information\\NFP121 Laurent WIESER (Adv Prog)\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+      "projectPath": "C:\\Users\\33760\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
       "packagesPath": "C:\\Users\\33760\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\33760\\Documents\\CNAM\\Titre concepteur informatique parcours système d'information\\NFP121 Laurent WIESER (Adv Prog)\\BlazorApp\\BlazorApp\\obj\\",
+      "outputPath": "C:\\Users\\33760\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

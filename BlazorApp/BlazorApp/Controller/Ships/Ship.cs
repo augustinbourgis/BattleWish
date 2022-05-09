@@ -26,31 +26,35 @@ namespace BlazorApp.Controller.Ships
         }
 
         // TEST
-        public void Right()
+        public Ship Right()
         {
             TopLeft = TopLeft.Right();
             GenerateTiles();
+            return this;
         }
 
         // TEST
-        public void Left()
+        public Ship Left()
         {
             TopLeft = TopLeft.Left();
             GenerateTiles();
+            return this;
         }
 
         // TEST
-        public void Top()
+        public Ship Top()
         {
             TopLeft = TopLeft.Top();
             GenerateTiles();
+            return this;
         }
 
         // TEST
-        public void Bottom()
+        public Ship Bottom()
         {
             TopLeft = TopLeft.Bottom();
             GenerateTiles();
+            return this;
         }
 
 
@@ -84,6 +88,20 @@ namespace BlazorApp.Controller.Ships
 
             GenerateNear();
             return Tiles.Count;
+        }
+
+        public Ship Direction(string dir)
+        {
+            switch (dir)
+            {
+                case "right": 
+                    return this.Right();
+                case "left": return this.Left();
+                case "top": return this.Top();
+                case "bottom": return this.Bottom();
+                case "spawn": return this;
+                default: return null;
+            }
         }
 
         public int GenerateNear()

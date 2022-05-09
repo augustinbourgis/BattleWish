@@ -4,7 +4,7 @@ using BlazorApp.Controller.Ships;
 
 namespace BlazorApp.Controller
 {
-    public class GameBoard
+    public class GameBoard : ICloneable
     {
         public List<Tile> Tiles { get; set; } = new List<Tile>();
         public int Width { get; set; }
@@ -52,7 +52,7 @@ namespace BlazorApp.Controller
                     }
                 }
             }
-            //AddNear(s);
+            AddNear(s);
             Boats++;
             return true;
         }
@@ -119,6 +119,16 @@ namespace BlazorApp.Controller
                 else
                 {
                     if (Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Empty)
+                    {
+                        return false;
+                    }
+                }
+            }
+            foreach (Tile t in s.Near)
+            {
+                if (Utility.Contains(t, Tiles))
+                {
+                    if (Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Empty && Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Near)
                     {
                         return false;
                     }
@@ -196,6 +206,16 @@ namespace BlazorApp.Controller
 
             Boats--;
             return true;
+        }
+
+        public object Clone()
+        {
+            GameBoard newGB = GameBoardFactory.GameBoard(Width,Height);
+            foreach (var prop in this.GetType().GetProperties())
+            {
+                prop.SetValue(newGB, prop.GetValue(this));
+            }
+            return newGB;
         }
     }
 }

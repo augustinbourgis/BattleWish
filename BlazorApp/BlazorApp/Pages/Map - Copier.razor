@@ -1,4 +1,4 @@
-﻿@page "/Map2"
+﻿@page "/Map"
 @using BlazorApp.Controller.Enums;
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
@@ -27,7 +27,6 @@ Etat connexion : @identification.Connected
         <p>@gb.Boats placed</p>
         if (gb.Boats == 6)
         {
-            <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
         }
         @message
         <div>
@@ -37,7 +36,6 @@ Etat connexion : @identification.Connected
             <button class="btn btn-primary" @onclick="Left">🡠</button>
             <button class="btn btn-primary" @onclick="Top">🡡</button>
             <button class="btn btn-primary" @onclick="Rotate">Rotate</button>
-            <button class="btn btn-primary" @onclick="Reset">Reset</button>
         </div>
         <div>
             <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
@@ -54,79 +52,86 @@ Etat connexion : @identification.Connected
 
 @code{
     public Ship s { get; set; }
-    public string message = "";
     public static Player p = PlayerFactory.Player();
-    public List<Ship> placed = new List<Ship>();
+    public string message = "";
+    public List<Ship> Placed = new List<Ship>();
     public GameBoard gb { get; set; } = p.GameBoard;
-
-    public void Reset()
+    
+    public void Move(string dir)
     {
-        gb.GenerateTiles();
-        gb.Boats = 0;
-    }
-
-    public void Validate()
-    {
-        identification.Player = PlayerFactory.Player(identification.Login);
-        identification.Player.GameBoard = gb;
-        message = "Validation completed !";
-    }
-
-    public void Right()
-    {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Right(s))
+        if (dir != "spawn")
         {
-            message = "Right not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
+            if (!Placed.Contains(s))
+            {
+                message = "Boat not placed !";
+                return;
+            }
         }
-        actionTest();
-
-    }
-
-    public void Left()
-    {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Left(s))
+        bool ok = false;
+        GameBoard tempGB = (GameBoard)gb.Clone();
+        Ship tempShip = s.Clone("");
+        if (dir == "spawn")
         {
-            message = "Left not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-
-            s = save;
+            if (!tempGB.IsAddable(tempShip))
+            {
+                message = dir + " not allowed !";
+                return;
+            }
         }
-        actionTest();
-
-    }
-
-    public void Top()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Top(s))
+        tempGB.Remove(tempShip);
+        tempShip = tempShip.Direction(dir);
+        gb.Remove(s);
+        Placed.Remove(s);
+        if (tempGB.IsAddable(tempShip))
         {
-            message = "Top not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
+            s = s.Direction(dir);
+            ok = true;
         }
-        actionTest();
-
+        else
+        {
+            message = dir + " not allowed !";
+        }
+        if (dir == "spawn" && !ok)
+        {
+            DebugWithPlaced();
+            return;
+        }
+        Placed.Add(s);
+        gb.Add(s);
+        DebugWithPlaced();
     }
 
+    public void DebugWithPlaced()
+    {
+        foreach (Ship s in Placed)
+        {
+            foreach (Tile t in s.Near)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+            foreach (Tile t in s.Tiles)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+
+        }
+    }
+
+    public void Right(){ Move("right"); }
+    public void Top(){ Move("top"); }
+    public void Bottom(){ Move("bottom"); }
+    public void Left(){ Move("left"); }
+
+
+   
     public void Rotate()
     {
         Orientation save = s.OrientationType;
@@ -139,32 +144,7 @@ Etat connexion : @identification.Connected
         actionTest();
     }
 
-    public void Refresh()
-    {
-        gb.GenerateTiles();
-        foreach (Ship s in placed)
-        {
-            gb.Remove(s);
-            gb.Add(s);
-        }
-    }
-
-    public void Bottom()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Bottom(s))
-        {
-            message = "Bottom not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-    }
+   
 
     public string Debug()
     {
@@ -203,9 +183,7 @@ Etat connexion : @identification.Connected
 
     public void actionTest()
     {
-        gb.Add(s);
-        if (!Utility.Contains(s, placed)) placed.Add(s);
-        Refresh();
+        Move("spawn");
     }
 
     public void Destroyer()

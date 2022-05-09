@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "qnApf2fWBWcNhVE8VOBjZkClBveMXfi9dhXdkXUCdF2ys2VR8+q6+GCfL56/ofGw/ajWMFsmvxRh4Ggm6thmJQ==",
+  "dgSpecHash": "ORTWPWLc9A4DGdK4QVWen/FkgVZ/030fnRivF1jU3TwrC7fGvnOgAPWDBm38XUBkkJlrIqVgfHCXIq5Luhd+mw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\33760\\Documents\\CNAM\\Titre concepteur informatique parcours système d'information\\NFP121 Laurent WIESER (Adv Prog)\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+  "projectFilePath": "C:\\Users\\33760\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\33760\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\33760\\.nuget\\packages\\microsoft.csharp\\4.3.0\\microsoft.csharp.4.3.0.nupkg.sha512",
