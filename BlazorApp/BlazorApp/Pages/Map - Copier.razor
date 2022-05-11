@@ -10,6 +10,7 @@ Etat connexion : @identification.Connected
 @{
     if (identification.Connected)
     {
+        <button class="btn btn-primary" @onclick="Reset">Reset me</button>
         <style>
             div{
                 font-size: 0.8em;
@@ -63,6 +64,16 @@ Etat connexion : @identification.Connected
     {
         p.Ships = Placed;
         identification.Player = p;
+        identification.Game.Player = p;
+    }
+
+    public void Reset()
+    {
+        p.GameBoard.GenerateTiles();
+        Placed = new List<Ship>();
+        gb = p.GameBoard;
+        p.GenerateShips();
+        Draw();
     }
 
     #region Movements

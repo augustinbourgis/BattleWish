@@ -19,6 +19,10 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Coordinate.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29vcmRpbmF0ZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -45,6 +49,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Map.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Modal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kYWwucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Shared/SurveyPrompt.razor]

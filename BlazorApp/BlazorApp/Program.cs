@@ -1,5 +1,6 @@
 using BlazorApp.Controller;
 using BlazorApp.Data;
+using Blazored.Modal;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -10,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
 builder.Services.AddScoped<Identification>();
+builder.Services.AddBlazoredModal();
 
 var app = builder.Build();
 

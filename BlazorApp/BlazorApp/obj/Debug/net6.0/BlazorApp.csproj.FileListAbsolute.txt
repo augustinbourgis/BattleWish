@@ -348,3 +348,5 @@ C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\obj\Debug\
 C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.pdb
 C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\obj\Debug\net6.0\BlazorApp.genruntimeconfig.cache
 C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\obj\Debug\net6.0\ref\BlazorApp.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\bin\Debug\net6.0\Blazored.Modal.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\bin\Debug\net6.0\Microsoft.JSInterop.WebAssembly.dll

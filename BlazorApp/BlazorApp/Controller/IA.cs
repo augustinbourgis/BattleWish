@@ -36,6 +36,7 @@ namespace BlazorApp.Controller
             Ships.Add(ShipFactory.Cruiser());
             Ships.Add((ShipFactory.Destroyer()));
             GameBoard = GameBoardFactory.GameBoard();
+            FiringBoard = GameBoardFactory.GameBoard();
             int attempt = 100;
             PlaceBoatRandomly(ref attempt);
         }

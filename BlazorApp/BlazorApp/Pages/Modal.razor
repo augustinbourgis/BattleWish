@@ -1,0 +1,18 @@
+﻿@page "/Modal"
+@using BlazorApp.Pages.Default
+@inject IModalService modal  
+@inject Identification i
+
+
+<h5>Click thisbutton Show Modal Popup</h5>  
+<button @onclick="ShowModal"class="btn btn-primary">View</button>  
+
+@code {
+    public void ShowModal()
+    {
+        if (i.Connected)
+        {
+            modal.Show<Coordinate>("Modal Popup Example");
+        }
+    }
+}

@@ -1,0 +1,21 @@
+﻿@inject Identification identification
+@inject IJSRuntime JsRuntime
+@inject IModalService modal  
+
+<h3>Coordinate</h3>
+<label>X Coord : </label>
+<input @bind="X"/>
+<label>Y Coord : </label>
+<input @bind="Y"/>
+
+<button @onclick="Validate">Validate</button>
+
+@code {
+    private int X;
+    private int Y;
+
+    public void Validate()
+    {
+        identification.Game.IsPlayerTurn = identification.Game.PlayerShoot(X, Y);
+    }
+}

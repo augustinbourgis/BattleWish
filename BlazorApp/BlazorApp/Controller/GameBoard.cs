@@ -20,6 +20,7 @@ namespace BlazorApp.Controller
         // TEST
         public int GenerateTiles()
         {
+            Tiles = new List<Tile>();
             if (Width <= 0 || Height <= 0) return -1;
 
             for(int w = 0; w < Width; w++)

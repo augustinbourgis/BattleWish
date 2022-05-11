@@ -3,12 +3,12 @@
 @using BlazorApp.Controller.Factory
 
 @inject Identification identification
+@inject IModalService modal  
 
 <h3>Game</h3>
 
 @if (identification.Player != null)
 {
-    @message
     <style>
         .tile {
             background: red;
@@ -20,6 +20,15 @@
             font-size: 0.8em;
         }
     </style>
+    @identification.Game.IsPlayerFirst
+    @if (identification.Game.IsPlayerTurn)
+    {
+        <button @onclick="PlayerPlay"class="btn btn-primary">Enter Coordinate</button>
+    }
+    @if (!identification.Game.IsPlayerTurn)
+    {
+        <button @onclick="IaPlay"class="btn btn-primary">Makes Ia Play</button>
+    }
     <div class="container">
         <div class="row">
             <div class="col">
@@ -28,23 +37,18 @@
             </div>
             <div class="col">
                 <p>Ennemy board :</p>
-                @((MarkupString)Rebug())
+                @((MarkupString)DrawFiring(identification.Player.FiringBoard))
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <p>IA board : </p>
-                @((MarkupString)Ia.Debug())
+                @((MarkupString)identification.Ia.Debug())
             </div>
             <div class="col">
                 <p>Ennemy board :</p>
-                @((MarkupString)Rebug())
+                @((MarkupString)DrawFiring(identification.Ia.FiringBoard))
             </div>
-        </div>
-        <div class="row">
-            <input @bind="X" placeholder="0"/>
-            <input @bind="Y" placeholder="0"/>
-            <button class="btn btn-primary" @onclick="Shoot">SHOOT</button>
         </div>
     </div>
 }
@@ -52,23 +56,18 @@
 @code {
     public string X;
     public string Y;
-    private string message;
-    public IA Ia = new IA();
 
-    public void Shoot()
+    public void IaPlay()
     {
-        Tile t = TileFactory.Tile(int.Parse(X), int.Parse(Y));
-        if (!Utility.Contains(t, identification.Player.FiringBoard.Tiles))
-        {
-            message = "Coordinate not valid";
-        }
-        else
-        {
-            identification.Player.FiringBoard.Tiles[Utility.Index(t, identification.Player.FiringBoard.Tiles)].OccupationType = Occupation.Battleship;
-        }
+        identification.Game.IsPlayerTurn = identification.Game.IaShoot(Utility.Random(0, identification.Player.GameBoard.Width), Utility.Random(0, identification.Player.GameBoard.Height));
+        this.StateHasChanged();
     }
 
-
+    public void PlayerPlay()
+    {
+        modal.Show<Coordinate>("Modal Popup Example");
+        this.StateHasChanged();
+    }
 
     public string Debug(GameBoard gb)
     {
@@ -95,6 +94,38 @@
                     {
                         color = "background-color: green;";
                     }
+                }
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(identification.Player.GameBoard.Tiles[index].OccupationType)}</div>";
+            }
+            temp += "</div>";
+        }
+        temp += "</div>";
+        return temp;
+    }
+
+    public string DrawFiring(GameBoard f)
+    {
+        string temp = "<div class=\"container\" style=\"width: 800px\">";
+        int index = 0;
+        for(int h = 0; h < f.Height; h++)
+        {
+            temp += "<div class=\"row\">";
+            for(int w = 0; w < f.Width; w++)
+            {
+                index = w * f.Width + h;
+                string color = "";
+                if(f.Tiles[index].IsShot)
+                {
+                    color = "background-color: purple;";
+                    if (f.Tiles[index].IsABoat())
+                    {
+                        color = "background-color: green;";
+                    }
+
+                }
+                else
+                {
+                    color = "background-color: red;";
                 }
                 temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(identification.Player.GameBoard.Tiles[index].OccupationType)}</div>";
             }

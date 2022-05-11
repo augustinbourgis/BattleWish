@@ -15,6 +15,13 @@ namespace BlazorApp.Controller
         public Player(string name)
         {
             Name = name;
+            GenerateShips();
+            GameBoard = GameBoardFactory.GameBoard();
+            FiringBoard = GameBoardFactory.GameBoard();
+        }
+
+        public bool GenerateShips()
+        {
             Ships = new List<Ship>()
             {
             ShipFactory.Destroyer(),
@@ -24,8 +31,7 @@ namespace BlazorApp.Controller
             ShipFactory.Carrier(),
             ShipFactory.Titanic()
             };
-            GameBoard = GameBoardFactory.GameBoard();
-            FiringBoard = GameBoardFactory.GameBoard();
+            return Ships.Count == 6;
         }
     }
 }
