@@ -2,6 +2,7 @@
 @using BlazorApp.Controller.Enums;
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
+@using BlazorApp.Controller;
 
 @inject Identification identification
 
@@ -24,13 +25,14 @@ Etat connexion : @identification.Connected
                 @s.OrientationType
             </div>
         }
-        <p>@gb.Boats placed</p>
-        if (gb.Boats == 6)
+        <p>@Placed.Count placed</p>
+        if (Placed.Count == 6)
         {
+            <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
         }
         @message
         <div>
-            <button class="btn btn-primary" id="aa" @onclick="actionTest">Click me</button>
+            <button class="btn btn-primary" id="aa" @onclick="Spawn">Click me</button>
             <button class="btn btn-primary" @onclick="Right">🡢</button>
             <button class="btn btn-primary" @onclick="Bottom">🡣</button>
             <button class="btn btn-primary" @onclick="Left">🡠</button>
@@ -45,7 +47,7 @@ Etat connexion : @identification.Connected
             <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
             <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
         </div>
-        @((MarkupString)@Debug())
+        @((MarkupString)@Draw())
     }
 }
 
@@ -56,7 +58,14 @@ Etat connexion : @identification.Connected
     public string message = "";
     public List<Ship> Placed = new List<Ship>();
     public GameBoard gb { get; set; } = p.GameBoard;
-    
+
+    public void Validate()
+    {
+        p.Ships = Placed;
+        identification.Player = p;
+    }
+
+    #region Movements
     public void Move(string dir)
     {
         if (dir != "spawn")
@@ -93,15 +102,34 @@ Etat connexion : @identification.Connected
         }
         if (dir == "spawn" && !ok)
         {
-            DebugWithPlaced();
+            DrawWithPlaced();
             return;
         }
         Placed.Add(s);
         gb.Add(s);
-        DebugWithPlaced();
+        DrawWithPlaced();
     }
 
-    public void DebugWithPlaced()
+    public void Right(){ Move("right"); }
+    public void Top(){ Move("top"); }
+    public void Bottom(){ Move("bottom"); }
+    public void Left(){ Move("left"); }
+   
+    public void Rotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s))
+        {
+            message = "Rotate not permitted";
+            s.OrientationType = save;
+            s.GenerateTiles();
+        }
+        Spawn();
+    }
+    #endregion Movements
+    
+    #region Drawings
+    public void DrawWithPlaced()
     {
         foreach (Ship s in Placed)
         {
@@ -125,28 +153,7 @@ Etat connexion : @identification.Connected
         }
     }
 
-    public void Right(){ Move("right"); }
-    public void Top(){ Move("top"); }
-    public void Bottom(){ Move("bottom"); }
-    public void Left(){ Move("left"); }
-
-
-   
-    public void Rotate()
-    {
-        Orientation save = s.OrientationType;
-        if (!gb.Rotate(s))
-        {
-            message = "Rotate not permitted";
-            s.OrientationType = save;
-            s.GenerateTiles();
-        }
-        actionTest();
-    }
-
-   
-
-    public string Debug()
+    public string Draw()
     {
         string temp = "<div class=\"container\" style=\"width: 800px\">";
         int index = 0;
@@ -180,8 +187,10 @@ Etat connexion : @identification.Connected
         temp += "</div>";
         return temp;
     }
+    #endregion Drawings
 
-    public void actionTest()
+    #region Spawners
+    public void Spawn()
     {
         Move("spawn");
     }
@@ -189,37 +198,37 @@ Etat connexion : @identification.Connected
     public void Destroyer()
     {
         s = Get("BlazorApp.Controller.Ships.Destroyer");
-        actionTest();
+        Spawn();
     }
 
     public void Cruiser()
     {
         s = Get("BlazorApp.Controller.Ships.Cruiser");
-        actionTest();
+        Spawn();
     }
 
     public void Submarine()
     {
         s = Get("BlazorApp.Controller.Ships.Submarine");
-        actionTest();
+        Spawn();
     }
 
     public void Battleship()
     {
         s = Get("BlazorApp.Controller.Ships.Battleship");
-        actionTest();
+        Spawn();
     }
 
     public void Carrier()
     {
         s = Get("BlazorApp.Controller.Ships.Carrier");
-        actionTest();
+        Spawn();
     }
 
     public void Titanic()
     {
         s = Get("BlazorApp.Controller.Ships.Titanic");
-        actionTest();
+        Spawn();
     }
 
     public Ship Get(string type)
@@ -233,4 +242,5 @@ Etat connexion : @identification.Connected
         }
         return null;
     }
+    #endregion Spawners
 }

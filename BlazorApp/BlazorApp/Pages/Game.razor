@@ -24,7 +24,7 @@
         <div class="row">
             <div class="col">
                 <p>Your board : </p>
-                @((MarkupString)Debug())
+                @((MarkupString)Debug(identification.Player.GameBoard))
             </div>
             <div class="col">
                 <p>Ennemy board :</p>
@@ -70,20 +70,31 @@
 
 
 
-    public string Debug()
+    public string Debug(GameBoard gb)
     {
-        string temp = "<div class=\"container\" style=\"width: 400px\">";
+        string temp = "<div class=\"container\" style=\"width: 800px\">";
         int index = 0;
-        for(int h = 0; h < identification.Player.GameBoard.Height; h++)
+        for(int h = 0; h < gb.Height; h++)
         {
             temp += "<div class=\"row\">";
-            for(int w = 0; w < identification.Player.GameBoard.Width; w++)
+            for(int w = 0; w < gb.Width; w++)
             {
-                index = w * 8 + h;
-                string color = "background-color: red;";
-                if(identification.Player.GameBoard.Tiles[index].OccupationType != Occupation.Empty)
+                index = w * gb.Width + h;
+                string color = "";
+                if(gb.Tiles[index].OccupationType == Occupation.Empty)
                 {
-                    color = "background-color: blue;";
+                    color = "background-color: red;";
+                }
+                else
+                {
+                    if (gb.Tiles[index].OccupationType == Occupation.Near)
+                    {
+                        color = "background-color: blue;";
+                    }
+                    else
+                    {
+                        color = "background-color: green;";
+                    }
                 }
                 temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(identification.Player.GameBoard.Tiles[index].OccupationType)}</div>";
             }
@@ -95,15 +106,30 @@
 
     public string Rebug()
     {
-        string temp = "<div class=\"container\" style=\"width: 400px; flex-wrap: nowrap; \">";
+        string temp = "<div class=\"container\" style=\"width: 800px; flex-wrap: nowrap; \">";
         int index = 0;
         for(int h = 0; h < identification.Player.FiringBoard.Height; h++)
         {
             temp += "<div class=\"row\">";
             for(int w = 0; w < identification.Player.FiringBoard.Width; w++)
             {
-                index = w * 8 + h;
-                string color = "background-color: red;";
+                index = w * identification.Player.FiringBoard.Width + h;
+                string color = "";
+                if(identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Empty)
+                {
+                    color = "background-color: red;";
+                }
+                else
+                {
+                    if (identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Near)
+                    {
+                        color = "background-color: blue;";
+                    }
+                    else
+                    {
+                        color = "background-color: green;";
+                    }
+                }
                 if(identification.Player.FiringBoard.Tiles[index].OccupationType != Occupation.Empty)
                 {
                     color = "background-color: blue;";
