@@ -8,69 +8,69 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = BlazorApp
 build_property.RootNamespace = BlazorApp
-build_property.ProjectDir = C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp\
+build_property.ProjectDir = E:\BattleWish\BattleWish\BlazorApp\BlazorApp\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\BlazorApp
+build_property.MSBuildProjectDirectory = E:\BattleWish\BattleWish\BlazorApp\BlazorApp
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/App.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/Counter.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/FetchData.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxGZXRjaERhdGEucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/Index.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxJbmRleC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Game.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Game.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcR2FtZS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/LogIn.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/LogIn.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Map - Copier.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Map - Copier.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwIC0gQ29waWVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Map.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Map.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Shared/SurveyPrompt.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/_Imports.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Shared/MainLayout.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-3dsd3z3yec
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Shared/NavMenu.razor]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-7cxxmz0cwl
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/Error.cshtml]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxFcnJvci5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/_Host.cshtml]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/_Host.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxfSG9zdC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Default/_Layout.cshtml]
+[E:/BattleWish/BattleWish/BlazorApp/BlazorApp/Pages/Default/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVmYXVsdFxfTGF5b3V0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
