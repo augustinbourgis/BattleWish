@@ -20,7 +20,7 @@
             font-size: 0.8em;
         }
     </style>
-    @identification.Game.IsPlayerFirst
+     <button @onclick="MyShips"class="btn btn-primary">My ships</button>
     @if (identification.Game.IsPlayerTurn)
     {
         <button @onclick="PlayerPlay"class="btn btn-primary">Enter Coordinate</button>
@@ -32,21 +32,11 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <p>Your board : </p>
-                @((MarkupString)Debug(identification.Player.GameBoard))
-            </div>
-            <div class="col">
-                <p>Ennemy board :</p>
+                <p>You :</p>
                 @((MarkupString)DrawFiring(identification.Player.FiringBoard))
             </div>
-        </div>
-        <div class="row">
             <div class="col">
-                <p>IA board : </p>
-                @((MarkupString)identification.Ia.Debug())
-            </div>
-            <div class="col">
-                <p>Ennemy board :</p>
+                <p>IA :</p>
                 @((MarkupString)DrawFiring(identification.Ia.FiringBoard))
             </div>
         </div>
@@ -57,9 +47,14 @@
     public string X;
     public string Y;
 
+    public void MyShips()
+    {
+        modal.Show<MyShips>("Modal Popup Example");
+    }
+
     public void IaPlay()
     {
-        identification.Game.IsPlayerTurn = identification.Game.IaShoot(Utility.Random(0, identification.Player.GameBoard.Width), Utility.Random(0, identification.Player.GameBoard.Height));
+        identification.Game.IsPlayerTurn = identification.Game.IaShoot();
         this.StateHasChanged();
     }
 
@@ -105,7 +100,7 @@
 
     public string DrawFiring(GameBoard f)
     {
-        string temp = "<div class=\"container\" style=\"width: 800px\">";
+        string temp = "<div class=\"container\" style=\"width: 750px\">";
         int index = 0;
         for(int h = 0; h < f.Height; h++)
         {
@@ -121,61 +116,28 @@
                     {
                         color = "background-color: green;";
                     }
-
                 }
                 else
                 {
                     color = "background-color: red;";
                 }
-                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(identification.Player.GameBoard.Tiles[index].OccupationType)}</div>";
-            }
-            temp += "</div>";
-        }
-        temp += "</div>";
-        return temp;
-    }
-
-    public string Rebug()
-    {
-        string temp = "<div class=\"container\" style=\"width: 800px; flex-wrap: nowrap; \">";
-        int index = 0;
-        for(int h = 0; h < identification.Player.FiringBoard.Height; h++)
-        {
-            temp += "<div class=\"row\">";
-            for(int w = 0; w < identification.Player.FiringBoard.Width; w++)
-            {
-                index = w * identification.Player.FiringBoard.Width + h;
-                string color = "";
-                if(identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Empty)
-                {
-                    color = "background-color: red;";
-                }
-                else
-                {
-                    if (identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Near)
+                string content = "";
+                if(f.Tiles[index].IsShot){
+                    if (f.Tiles[index].IsABoat())
                     {
-                        color = "background-color: blue;";
+                        content = Utility.DescriptionAttr(f.Tiles[index].OccupationType);
                     }
                     else
                     {
-                        color = "background-color: green;";
+                        content = "";
                     }
-                }
-                if(identification.Player.FiringBoard.Tiles[index].OccupationType != Occupation.Empty)
-                {
-                    color = "background-color: blue;";
-                }
-                Tile t = identification.Player.FiringBoard.Tiles[index];
-                string toShow = "";
-                if (t.OccupationType == Occupation.Empty)
-                {
-                    toShow = t.X + "/" + t.Y;
                 }
                 else
                 {
-                    toShow = Utility.DescriptionAttr(t.OccupationType);
+                    Tile t = f.Tiles[index];
+                    content = $"{t.X}/{t.Y}";
                 }
-                temp += $"<div class=\"col tile\" >{toShow}</div>";
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{content}</div>";
             }
             temp += "</div>";
         }

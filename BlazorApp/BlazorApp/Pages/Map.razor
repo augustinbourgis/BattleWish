@@ -1,14 +1,17 @@
-﻿@page "/Map2"
+﻿@page "/Map"
 @using BlazorApp.Controller.Enums;
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
+@using BlazorApp.Controller;
 
 @inject Identification identification
+@inject NavigationManager NavManager
 
 Etat connexion : @identification.Connected
 @{
     if (identification.Connected)
     {
+        <button class="btn btn-primary" @onclick="Reset">Reset me</button>
         <style>
             div{
                 font-size: 0.8em;
@@ -24,14 +27,14 @@ Etat connexion : @identification.Connected
                 @s.OrientationType
             </div>
         }
-        <p>@gb.Boats placed</p>
-        if (gb.Boats == 6)
+        <p>@Placed.Count placed</p>
+        if (Placed.Count == 6)
         {
             <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
         }
         @message
         <div>
-            <button class="btn btn-primary" id="aa" @onclick="actionTest">Click me</button>
+            <button class="btn btn-primary" id="aa" @onclick="Spawn">Click me</button>
             <button class="btn btn-primary" @onclick="Right">🡢</button>
             <button class="btn btn-primary" @onclick="Bottom">🡣</button>
             <button class="btn btn-primary" @onclick="Left">🡠</button>
@@ -46,86 +49,87 @@ Etat connexion : @identification.Connected
             <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
             <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
         </div>
-        @((MarkupString)@Debug())
+        @((MarkupString)@Draw())
     }
 }
 
 
 @code{
     public Ship s { get; set; }
-    public string message = "";
     public static Player p = PlayerFactory.Player();
-    public List<Ship> placed = new List<Ship>();
+    public string message = "";
+    public List<Ship> Placed = new List<Ship>();
     public GameBoard gb { get; set; } = p.GameBoard;
-
-    public void Reset()
-    {
-        gb.GenerateTiles();
-        gb.Boats = 0;
-    }
 
     public void Validate()
     {
-        identification.Player = PlayerFactory.Player(identification.Login);
-        identification.Player.GameBoard = gb;
-        message = "Validation completed !";
+        p.Ships = Placed;
+        identification.Player = p;
+        identification.Player.FiringBoard = identification.Ia.GameBoard;
+        identification.Ia.FiringBoard = identification.Player.GameBoard;
+        identification.Game.Player = p;
+        NavManager.NavigateTo("/Game");
     }
 
-    public void Right()
+    public void Reset()
     {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Right(s))
-        {
-            message = "Right not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-
+        p.GameBoard.GenerateTiles();
+        Placed = new List<Ship>();
+        gb = p.GameBoard;
+        p.GenerateShips();
+        Draw();
     }
 
-    public void Left()
+    #region Movements
+    public void Move(string dir)
     {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Left(s))
+        if (dir != "spawn")
         {
-            message = "Left not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-
-            s = save;
+            if (!Placed.Contains(s))
+            {
+                message = "Boat not placed !";
+                return;
+            }
         }
-        actionTest();
-
+        bool ok = false;
+        GameBoard tempGB = (GameBoard)gb.Clone();
+        Ship tempShip = s.Clone("");
+        if (dir == "spawn")
+        {
+            if (!tempGB.IsAddable(tempShip))
+            {
+                message = dir + " not allowed !";
+                return;
+            }
+        }
+        tempGB.Remove(tempShip);
+        tempShip = tempShip.Direction(dir);
+        gb.Remove(s);
+        Placed.Remove(s);
+        if (tempGB.IsAddable(tempShip))
+        {
+            s = s.Direction(dir);
+            ok = true;
+        }
+        else
+        {
+            message = dir + " not allowed !";
+        }
+        if (dir == "spawn" && !ok)
+        {
+            DrawWithPlaced();
+            return;
+        }
+        Placed.Add(s);
+        gb.Add(s);
+        DrawWithPlaced();
     }
 
-    public void Top()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Top(s))
-        {
-            message = "Top not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-
-    }
-
+    public void Right(){ Move("right"); }
+    public void Top(){ Move("top"); }
+    public void Bottom(){ Move("bottom"); }
+    public void Left(){ Move("left"); }
+   
     public void Rotate()
     {
         Orientation save = s.OrientationType;
@@ -135,37 +139,36 @@ Etat connexion : @identification.Connected
             s.OrientationType = save;
             s.GenerateTiles();
         }
-        actionTest();
+        Spawn();
     }
-
-    public void Refresh()
+    #endregion Movements
+    
+    #region Drawings
+    public void DrawWithPlaced()
     {
-        gb.GenerateTiles();
-        foreach (Ship s in placed)
+        foreach (Ship s in Placed)
         {
-            gb.Remove(s);
-            gb.Add(s);
+            foreach (Tile t in s.Near)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+            foreach (Tile t in s.Tiles)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+
         }
     }
 
-    public void Bottom()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Bottom(s))
-        {
-            message = "Bottom not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-    }
-
-    public string Debug()
+    public string Draw()
     {
         string temp = "<div class=\"container\" style=\"width: 800px\">";
         int index = 0;
@@ -199,48 +202,48 @@ Etat connexion : @identification.Connected
         temp += "</div>";
         return temp;
     }
+    #endregion Drawings
 
-    public void actionTest()
+    #region Spawners
+    public void Spawn()
     {
-        gb.Add(s);
-        if (!Utility.Contains(s, placed)) placed.Add(s);
-        Refresh();
+        Move("spawn");
     }
 
     public void Destroyer()
     {
         s = Get("BlazorApp.Controller.Ships.Destroyer");
-        actionTest();
+        Spawn();
     }
 
     public void Cruiser()
     {
         s = Get("BlazorApp.Controller.Ships.Cruiser");
-        actionTest();
+        Spawn();
     }
 
     public void Submarine()
     {
         s = Get("BlazorApp.Controller.Ships.Submarine");
-        actionTest();
+        Spawn();
     }
 
     public void Battleship()
     {
         s = Get("BlazorApp.Controller.Ships.Battleship");
-        actionTest();
+        Spawn();
     }
 
     public void Carrier()
     {
         s = Get("BlazorApp.Controller.Ships.Carrier");
-        actionTest();
+        Spawn();
     }
 
     public void Titanic()
     {
         s = Get("BlazorApp.Controller.Ships.Titanic");
-        actionTest();
+        Spawn();
     }
 
     public Ship Get(string type)
@@ -254,4 +257,5 @@ Etat connexion : @identification.Connected
         }
         return null;
     }
+    #endregion Spawners
 }

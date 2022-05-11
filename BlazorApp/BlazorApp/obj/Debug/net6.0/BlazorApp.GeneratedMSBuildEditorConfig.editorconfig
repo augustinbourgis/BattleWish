@@ -43,16 +43,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9nSW4ucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Map - Copier.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwIC0gQ29waWVyLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Map.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWFwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Modal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/MyShips.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXlTaGlwcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Pages/Refresher.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVmcmVzaGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Augus/OneDrive/Documents/CNAM/BattleWish/BlazorApp/BlazorApp/Shared/SurveyPrompt.razor]

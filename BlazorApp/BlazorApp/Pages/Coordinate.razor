@@ -1,12 +1,13 @@
 ﻿@inject Identification identification
 @inject IJSRuntime JsRuntime
 @inject IModalService modal  
+@inject NavigationManager NavManager
 
 <h3>Coordinate</h3>
 <label>X Coord : </label>
-<input @bind="X"/>
+<input @bind="X" type="number" min="0" max="@identification.Game.Player.FiringBoard.Width-1" step="1"/>
 <label>Y Coord : </label>
-<input @bind="Y"/>
+<input @bind="Y" type="number" min="0" max="@identification.Game.Player.FiringBoard.Height-1" step="1"/>
 
 <button @onclick="Validate">Validate</button>
 
@@ -17,5 +18,7 @@
     public void Validate()
     {
         identification.Game.IsPlayerTurn = identification.Game.PlayerShoot(X, Y);
+        NavManager.NavigateTo("/Refresher");
+        this.StateHasChanged();
     }
 }
