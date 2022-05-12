@@ -62,3 +62,14 @@ a, .btn-link {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.topRowCustom {
+    background-image: url('/img/ocean-sea.svg');
+    background-repeat: no-repeat;
+    background-color: #045455;
+    background-position: top;
+    background-size: cover;
+    position: relative;
+    background-size: contain;
+    background-attachment: fixed;
+}

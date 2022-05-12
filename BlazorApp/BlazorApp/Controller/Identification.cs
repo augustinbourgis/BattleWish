@@ -1,11 +1,18 @@
 ﻿namespace BlazorApp.Controller
 {
+    using System;
+    using System.ComponentModel.DataAnnotations;
     public class Identification
     {
-        public Player Current { get; set; }
-        public string Login;
-        public string Password;
-        public Player Player;
+        public Player? Current { get; set; }
+        public Player? Player;
+
+        [Required]
+        [StringLength(20, ErrorMessage = "Login too long (20 character limit).")]
+        public string? Login { get; set; }
+
+        [Required]
+        public string? Password { get; set; }
 
         public Boolean Connected { get { return Current != null; }  }
 

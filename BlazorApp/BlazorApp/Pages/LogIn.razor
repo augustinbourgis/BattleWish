@@ -1,38 +1,44 @@
 ﻿@page "/LogIn"
-@using BlazorApp.Controller;
-
+@using Microsoft.Extensions.Logging
 @inject Identification identification
 
-<div>
-    <p>Enter your login :</p>
-    <input type="text" @bind="@identification.Login" @oninput="OnInputLogin"/>
-    <p>Enter your password</p>
-    <input type="password" @bind="@identification.Password" @oninput="OnInputPass"/>
-</div>
+<link href="/css/LogIn.css" rel="stylesheet" />
 
-<button class="btn btn-primary" @onclick="IdentificationConnect">Connect</button>
-<button class="btn btn-primary" @onclick="IdentificationDisconnect">Disconnect</button>
+<div class="container">
+		<div class="row">
+			<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+				<div class="errorContainer">
+				</div>
+				<div class="card card-signin my-5">
+					<div class="card-body">
+						<h5 class="card-title text-center">Log in</h5>
+						<EditForm Model="@identification" OnValidSubmit="@HandleValidSubmit">
+							<DataAnnotationsValidator />
+							<ValidationSummary />
+							<div class="form-label-group">
+								<InputText id="inputLogin" class="form-control" @bind-Value="identification.Login" />
+								<label for="inputLogin">Login</label>
+							</div>
+							<div class="form-label-group">
+								<InputText type="password" id="inputPassword" class="form-control" placeholder="Mot de passe" @bind-Value="identification.Password" />
+								<label for="inputPassword">Mot de passe</label>
+							</div>
+							<button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Connect</button>
+						</EditForm>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 
 <p>Etat connexion : @identification.Connected</p>
 
 @code {
-    private void OnInputLogin(ChangeEventArgs changeEvent)
-    {
-        identification.Login = (string)changeEvent.Value;
-    }
 
-    private void OnInputPass(ChangeEventArgs changeEvent)
-    {
-        identification.Password = (string)changeEvent.Value;
-    }
-
-    private void IdentificationConnect()
-    {
-        identification.LogIn();
-    }
-
-    private void IdentificationDisconnect()
-    {
-        identification.Deconnect();
+	private void HandleValidSubmit()
+	{
+		identification.LogIn();
     }
 }
