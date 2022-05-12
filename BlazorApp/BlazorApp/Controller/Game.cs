@@ -15,8 +15,7 @@ namespace BlazorApp.Controller
 
         public Game()
         {
-            //IsPlayerFirst = Utility.Random(1, 10) > 5;
-            IsPlayerFirst = true;
+            IsPlayerFirst = Utility.Random(1, 10) > 5;
             IsPlayerTurn = IsPlayerFirst;
             Start = DateTime.Now;
         }

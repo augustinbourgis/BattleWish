@@ -16,10 +16,12 @@ namespace BlazorApp.Controller
             Y = y;
         }
 
+        // TEST
         public bool Available()
         {
             return OccupationType == Occupation.Empty;
         }
+        
 
         public bool IsABoat()
         {

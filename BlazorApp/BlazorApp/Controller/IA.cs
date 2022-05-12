@@ -16,9 +16,11 @@ namespace BlazorApp.Controller
         public const int ProbDiagBR = 90;
         public const int ProbDiagTR = 100;
 
-        public Orientation GetProb()
+        public Orientation GetProb(int p = -1)
         {
+
             int prob = Utility.Random(0, 100);
+            if (p != -1) prob = p;
             Orientation o = Orientation.HORIZONTHAL;
             if (prob < ProbDiagTR) o = Orientation.DIAG_TR;
             if (prob < ProbDiagBR) o = Orientation.DIAG_BR;
@@ -27,6 +29,7 @@ namespace BlazorApp.Controller
             return o;
         }
 
+        // TEST
         public IA()
         {
             Ships.Add(ShipFactory.Titanic());
@@ -41,40 +44,7 @@ namespace BlazorApp.Controller
             PlaceBoatRandomly(ref attempt);
         }
 
-        public string Debug()
-        {
-            string temp = "<div class=\"container\" style=\"width: 800px\">";
-            int index = 0;
-            for (int h = 0; h < GameBoard.Height; h++)
-            {
-                temp += "<div class=\"row\">";
-                for (int w = 0; w < GameBoard.Width; w++)
-                {
-                    index = w * GameBoard.Width + h;
-                    string color = "";
-                    if (GameBoard.Tiles[index].OccupationType == Occupation.Empty)
-                    {
-                        color = "background-color: red;";
-                    }
-                    else
-                    {
-                        if (GameBoard.Tiles[index].OccupationType == Occupation.Near)
-                        {
-                            color = "background-color: blue;";
-                        }
-                        else
-                        {
-                            color = "background-color: green;";
-                        }
-                    }
-                    temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{Utility.DescriptionAttr(GameBoard.Tiles[index].OccupationType)}</div>";
-                }
-                temp += "</div>";
-            }
-            temp += "</div>";
-            return temp;
-        }
-
+        // TEST
         public bool PlaceBoatRandomly(ref int attempt)
         {
             attempt--;
@@ -113,6 +83,7 @@ namespace BlazorApp.Controller
             return true;
         }
 
+        // TEST
         public bool PlaceBoatRandomly(ref List<Ship> listShip, ref int attempt)
         {
             attempt--;

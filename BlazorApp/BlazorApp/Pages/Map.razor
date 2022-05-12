@@ -93,7 +93,7 @@ Etat connexion : @identification.Connected
         }
         bool ok = false;
         GameBoard tempGB = (GameBoard)gb.Clone();
-        Ship tempShip = s.Clone("");
+        Ship tempShip = (Ship)s.Clone();
         if (dir == "spawn")
         {
             if (!tempGB.IsAddable(tempShip))
@@ -129,17 +129,19 @@ Etat connexion : @identification.Connected
     public void Top(){ Move("top"); }
     public void Bottom(){ Move("bottom"); }
     public void Left(){ Move("left"); }
-   
+
     public void Rotate()
     {
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s))
         {
             message = "Rotate not permitted";
-            s.OrientationType = save;
             s.GenerateTiles();
         }
+        else
+        {
         Spawn();
+        }
     }
     #endregion Movements
     
