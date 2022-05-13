@@ -17,12 +17,10 @@
         public Boolean Connected { get { return Current != null; }  }
 
         // TEST
-        public Boolean LogIn()
+        public Boolean LogIn(string login, bool isAdmin, bool isMale)
         {
-            if(Login == "test" && Password == "test")
-            {
-                Current = new Player(Login);
-            }
+            Login = login;
+            Current = new Player(Login, isAdmin, isMale);
             return Connected;
         }
 

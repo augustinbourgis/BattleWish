@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "HxLVweHqGBCYuch81jQvBL7/C+ZT8T3Cg5hbef8EqII=",
+  "Hash": "GMzDriOrNBxcJrSjJ+f2h5gQ3lSxfmzUXmMINTEKZQQ=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -117,6 +117,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\LogIn.css"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\css\\NavBar.css",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "css/NavBar.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\NavBar.css"
     },
     {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\css\\open-iconic\\font\\css\\open-iconic-bootstrap.min.css",
@@ -323,23 +340,6 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
-      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\background.svg",
-      "SourceId": "BlazorApp",
-      "SourceType": "Discovered",
-      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
-      "BasePath": "_content/BlazorApp",
-      "RelativePath": "img/background.svg",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\img\\background.svg"
-    },
-    {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\background3.jpg",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
@@ -372,6 +372,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\ManPirate.svg"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\ocean-sea.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/ocean-sea.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\ocean-sea.svg"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\RegistrationLogInBackground.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/RegistrationLogInBackground.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\RegistrationLogInBackground.svg"
     },
     {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\WomanPirate.svg",

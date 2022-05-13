@@ -1,0 +1,48 @@
+﻿@page "/PersonalSpace"
+
+<PageTitle>Personal space</PageTitle>
+
+@using BlazorApp.Data
+@inject WeatherForecastService ForecastService
+
+<h1>Personal space</h1>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IALevel</th>
+                <th>Status</th>
+                <th>IAShoot</th>
+                <th>PlayerShoot</th>
+                <th>Game time</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Summary</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.Date.Hour</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+        forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+    }
+}

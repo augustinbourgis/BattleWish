@@ -1,0 +1,12 @@
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.deps.json
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.dll
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.pdb
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.AssemblyReference.cache
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfoInputs.cache
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfo.cs
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.CoreCompileInputs.cache
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.dll
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\refint\DataLibrary.dll
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.pdb
+E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\ref\DataLibrary.dll

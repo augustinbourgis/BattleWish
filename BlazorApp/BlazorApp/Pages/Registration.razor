@@ -1,70 +1,135 @@
 ﻿@page "/Registration"
-
+@using DataLibrary
+@using Microsoft.Extensions.Logging
+@using Microsoft.Extensions.Configuration
+@using BlazorApp.Models
+@using System.Text.RegularExpressions;
+@using System.Security.Cryptography;
+@using System.Text;
+@inject IDataAccess _data
+@inject IConfiguration _config
 @inject Identification identification
+@inject SignUp signUp
+@inherits ComponentBase
+
 
 <link href="/css/Registration.css" rel="stylesheet" />
 
 <div class="container">
     <div class="row">
       <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
+        <div class="card card-signUp my-5">
           <div class="card-body">
             <h5 class="card-title text-center">Sign Up</h5>
-            <form id="idFormSignin" class="form-signin" action="" method="POST" onsubmit="">
+            <EditForm class="form-signUp" Model="@signUp" OnValidSubmit="@HandleValidSubmit">
+                <DataAnnotationsValidator />
+                <div class="alert alert-danger alert-dismissible fade @loginErrorState" role="alert">
+                    <strong>Login already taken</strong>
+                  </div>
               <div class="form-label-group">
-                <input type="text" id="inputLogin" class="form-control" placeholder="Login" name="login" onclick="" required>
+                <InputText id="inputLogin" class="form-control" placeholder="Login" @bind-Value="signUp.Login" />
                 <label for="inputLogin">Login</label>
+                <ValidationMessage For="() => signUp.Login"/>
               </div>
               <div class="container-image-checkbox">
+                  <InputRadioGroup Name="Sex" @bind-Value="signUp.IsMale">
                   <div class="image-checkbox">
                       <label class="custom-control-label" for="Man">
-                        <input type="radio" class="custom-control-input" id="Man" name="Sex" hidden>
+                        <InputRadio id="Man" class="custom-control-input" Name="Sex" Value=true hidden/>
                         <img src="/img/ManPirate.svg" alt="#" class="img-Form">
                       </label>
                 </div>
                 <div class="image-checkbox">
                     <label class="custom-control-label" for="Woman">
-                        <input type="radio" class="custom-control-input" id="Woman" name="Sex" hidden>
+                        <InputRadio id="Woman" class="custom-control-input" Name="Sex" Value=false hidden/>
                         <img src="/img/WomanPirate.svg" alt="#" class="img-Form">
                     </label>
                 </div>
+                </InputRadioGroup>
+                <ValidationMessage For="() => signUp.IsMale"/>
               </div>
 			 <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email" name="mail" onclick="" required>
+                <InputText type="email" id="inputEmail" class="form-control" placeholder="Email" @bind-Value="signUp.Email" />
                 <label for="inputEmail">Email</label>
+                <ValidationMessage For="() => signUp.Email"/>
               </div>
               <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="MDP" onclick="" required>
+                <InputText type="password" id="inputPassword" class="form-control" placeholder="Password" @bind-Value="signUp.Password" />
                 <label for="inputPassword">Password</label>
+                <ValidationMessage For="() => signUp.Password"/>
               </div>
 
 			  <div class="form-label-group">
-                <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Confirm Password" onclick="" name="ConfirmMDP" required>
+                <InputText type="password" id="inputPasswordConfirm" class="form-control" placeholder="Confirm Password" @bind-Value="signUp.ConfirmPassword" />
                 <label for="inputPasswordConfirm">Confirm Password</label>
+                <ValidationMessage For="() => signUp.ConfirmPassword"/>
               </div>
               <div class="form-label-group btnForm d-flex justify-content-center">
                 <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" >Sign Up</button>
               </div>
-            </form>
+            </EditForm>
           </div>
         </div>
       </div>
     </div>
   </div>
 	<div>
-        <div class="errorContainer">
-            <!--<div class="alert alert-danger" role="alert">Les mots de passes sont différents.</div>-->
-            <!--<div class="alert alert-danger" role="alert">Une erreur est survenu, veuillez réessayer.</div>-->
-        </div>
     </div>
 
-@if (identification.Player == null)
-{
-    
-}
+    <p>@identification.Connected</p>
 
 @code {
-    
+    List<UserModel> user;
+    bool IsUnique;
+    string loginErrorState = "fade";
+
+    private async Task InsertUser()
+    {
+        string sql = "insert into user (login, email, password, isMale) values (@Login, @Email, @Password, @isMale );";
+
+        await _data.SaveData(sql, new { Login = signUp.Login, Email = signUp.Email, Password = signUp.Password, isMale = signUp.IsMale}, _config.GetConnectionString("default"));
+
+        await OnInitializedAsync();
+    }
+
+    private async Task LoginValidation()
+    {
+        string sql = "select login from user where login like'"+signUp.Login+"'";
+
+        user = await _data.LoadData<UserModel, dynamic>(sql, new { }, _config.GetConnectionString("default"));
+
+        if(user.Count == 0)
+        {
+            IsUnique = true;
+        }
+        else
+        {
+            loginErrorState = "show";
+        }
+    }
+
+    private async Task PasswordHash()
+    {
+        using (SHA256 sha256Hash = SHA256.Create())
+        {
+            byte[] sourceBytes = Encoding.UTF8.GetBytes(signUp.Password);
+            byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
+            string hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+            signUp.Password = hash;
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        await LoginValidation();
+        if(IsUnique == true)
+        {
+            await PasswordHash();
+            await InsertUser();
+            identification.LogIn(signUp.Login, false, signUp.IsMale.Value);
+        }
+        
+    }
 
     
 }

@@ -6,15 +6,35 @@ namespace BlazorApp.Controller
 {
     public class Player
     {
-        public string Name { get; set; }
+        public string Login { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsMale { get; set; }
         public GameBoard GameBoard { get; set; }
         public GameBoard FiringBoard { get; set; }
         public List<Ship> Ships { get; set; }
         public bool HasLost { get{ return Ships.All(x => x.IsSunk()); }}
 
-        public Player(string name)
+        public Player(string login)
         {
-            Name = name;
+            Login = login;
+            Ships = new List<Ship>()
+            {
+            ShipFactory.Destroyer(),
+            ShipFactory.Cruiser(),
+            ShipFactory.Submarine(),
+            ShipFactory.Battleship(),
+            ShipFactory.Carrier(),
+            ShipFactory.Titanic()
+            };
+            GameBoard = GameBoardFactory.GameBoard();
+            FiringBoard = GameBoardFactory.GameBoard();
+        }
+
+        public Player(string login, bool isAdmin, bool isMale)
+        {
+            Login = login;
+            IsAdmin = isAdmin;
+            IsMale = isMale;
             Ships = new List<Ship>()
             {
             ShipFactory.Destroyer(),

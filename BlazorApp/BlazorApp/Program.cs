@@ -1,5 +1,6 @@
 using BlazorApp.Controller;
 using BlazorApp.Data;
+using DataLibrary;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -9,8 +10,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddScoped<Identification>();
-
+builder.Services.AddSingleton<Identification>();
+builder.Services.AddScoped<SignUp>();
+builder.Services.AddSingleton<IDataAccess, DataAccess>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

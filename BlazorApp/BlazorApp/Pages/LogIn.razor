@@ -1,6 +1,13 @@
 ﻿@page "/LogIn"
-@using Microsoft.Extensions.Logging
+@using BlazorApp.Models;
+@using Microsoft.Extensions.Logging;
+@using System.Security.Cryptography;
+@using System.Text;
+@using DataLibrary;
+@using Microsoft.Extensions.Configuration;
 @inject Identification identification
+@inject IDataAccess _data
+@inject IConfiguration _config
 
 <link href="/css/LogIn.css" rel="stylesheet" />
 
@@ -36,9 +43,47 @@
 <p>Etat connexion : @identification.Connected</p>
 
 @code {
+	List<UserModel> user;
+	bool CorrectPassword;
 
-	private void HandleValidSubmit()
+	private async Task GetUser()
 	{
-		identification.LogIn();
+		string sql = "select * from user where login like'"+identification.Login+"'";
+
+		user = await _data.LoadData<UserModel, dynamic>(sql, new { }, _config.GetConnectionString("default"));
+	}
+
+	private async Task PasswordHash()
+	{
+		using (SHA256 sha256Hash = SHA256.Create())
+		{
+			byte[] sourceBytes = Encoding.UTF8.GetBytes(identification.Password);
+			byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
+			string hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
+			identification.Password = hash;
+		}
+	}
+
+	private async Task CheckPassword()
+	{
+		CorrectPassword = false;
+		await PasswordHash();
+
+		if(user[0].Password == identification.Password)
+		{
+			CorrectPassword = true;
+		}
+	}
+
+	private async Task HandleValidSubmit()
+	{
+		await GetUser();
+		await CheckPassword();
+
+		if(CorrectPassword == true)
+		{
+			identification.LogIn(user[0].Login, user[0].IsAdmin, user[0].IsMale);
+		}
+		
     }
 }

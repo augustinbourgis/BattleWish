@@ -2,37 +2,29 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
+    using Controller.CustomValidators;
     public class SignUp
     {
-        public Player? Current { get; set; }
-        public Player? Player;
 
         [Required]
         [StringLength(20, ErrorMessage = "Login too long (20 character limit).")]
         public string? Login { get; set; }
 
+        [Required(ErrorMessage = "Sex is required")]
+        public bool? IsMale { get; set; }
+
         [Required]
+        [EmailAddress]
+        public string? Email { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "Password too long (100 character limit).")]
+        [RegularExpression(@"^(?=.*[\W])(?=.*[0-9])(?=.*[a-z]).{8,128}$", ErrorMessage = "The password must have at least 1 number, 1 special character and a length of at least 8 characters")]
         public string? Password { get; set; }
 
-        public Boolean Connected { get { return Current != null; } }
+        [Required]
+        [Compare("Password", ErrorMessage = "The password must be similar")]
+        public string? ConfirmPassword { get; set; }
 
-        // TEST
-        public Boolean UserSignUp()
-        {
-            if (Login == "test" && Password == "test")
-            {
-                Current = new Player(Login);
-            }
-            return Connected;
-        }
-
-        // TEST
-        public Boolean Deconnect()
-        {
-            Login = null;
-            Password = null;
-            Current = null;
-            return !Connected;
-        }
     }
 }
