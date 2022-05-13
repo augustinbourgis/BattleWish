@@ -3,7 +3,8 @@
 @using BlazorApp.Controller.Factory
 
 @inject Identification identification
-@inject IModalService modal  
+@inject IModalService modal
+@inject NavigationManager NavManager
 
 <h3>Game</h3>
 
@@ -20,7 +21,12 @@
             font-size: 0.8em;
         }
     </style>
+    <p>Game difficulty : @identification.Game.Difficuty</p>
      <button @onclick="MyShips"class="btn btn-primary">My ships</button>
+    @if (identification.Game.IsFinished)
+    {
+        NavManager.NavigateTo("/LogIn");
+    }
     @if (identification.Game.IsPlayerTurn)
     {
         <button @onclick="PlayerPlay"class="btn btn-primary">Enter Coordinate</button>

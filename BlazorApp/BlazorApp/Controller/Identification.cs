@@ -22,7 +22,7 @@ namespace BlazorApp.Controller
                 Current = new Player(Login);
             }
             Ia = new IA();
-            Game = new Game();
+            Game = new Game(Difficulty);
             Game.Ia = Ia;
             return Connected;
         }

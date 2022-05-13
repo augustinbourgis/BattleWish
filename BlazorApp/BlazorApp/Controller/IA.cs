@@ -40,7 +40,7 @@ namespace BlazorApp.Controller
             Ships.Add((ShipFactory.Destroyer()));
             GameBoard = GameBoardFactory.GameBoard();
             FiringBoard = GameBoardFactory.GameBoard();
-            int attempt = 100;
+            int attempt = 1000;
             PlaceBoatRandomly(ref attempt);
         }
 
@@ -56,7 +56,11 @@ namespace BlazorApp.Controller
                     return true;
                 }
             }
-            List<Ship> listShip = Ships;
+            List<Ship> listShip = new List<Ship>();
+            foreach(Ship ship in Ships)
+            {
+                listShip.Add(ship);
+            }
             foreach (Ship s in Ships)
             {
                 s.TopLeft.X = Utility.Random(0, GameBoard.Width);

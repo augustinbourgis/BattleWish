@@ -63,7 +63,7 @@ namespace BlazorApp.Controller
                     {
                         Tiles[Utility.Index(t, Tiles)] = t;
                     }
-                    else
+                    else if(Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Near)
                     {
                         Tiles = save;
                         return false;

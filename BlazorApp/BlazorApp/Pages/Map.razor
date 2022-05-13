@@ -12,6 +12,9 @@ Etat connexion : @identification.Connected
     if (identification.Connected)
     {
         <button class="btn btn-primary" @onclick="Reset">Reset me</button>
+        <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>
+        <button class="btn btn-primary" @onclick="SetDifficultyEasy">Difficulty EZ</button>
+        <button class="btn btn-primary" @onclick="SetDifficultyMedium">Difficulty Medium</button>
         <style>
             div{
                 font-size: 0.8em;
@@ -39,7 +42,13 @@ Etat connexion : @identification.Connected
             <button class="btn btn-primary" @onclick="Bottom">🡣</button>
             <button class="btn btn-primary" @onclick="Left">🡠</button>
             <button class="btn btn-primary" @onclick="Top">🡡</button>
-            <button class="btn btn-primary" @onclick="Rotate">Rotate</button>
+            <br>
+            <button class="btn btn-primary" @onclick="Rotate">Next Rotate</button>
+            <button class="btn btn-primary" @onclick="VerticalRotate">Vertical Rotate</button>
+            <button class="btn btn-primary" @onclick="HorizonthalRotate">Horizonthal Rotate</button>
+            <button class="btn btn-primary" @onclick="DiagBRRotate">Diag BR Rotate</button>
+            <button class="btn btn-primary" @onclick="DiagTRRotate">Diag TR Rotate</button>
+
         </div>
         <div>
             <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
@@ -60,6 +69,77 @@ Etat connexion : @identification.Connected
     public string message = "";
     public List<Ship> Placed = new List<Ship>();
     public GameBoard gb { get; set; } = p.GameBoard;
+    public Difficulties Diff { get; set; } = Difficulties.FACILE;
+
+    public void VerticalRotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.VERTICAL))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void HorizonthalRotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.HORIZONTHAL))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void DiagBRRotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.DIAG_BR))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void DiagTRRotate()
+    {
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.DIAG_TR))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void SetDifficultyEasy()
+    {
+        Diff = Difficulties.FACILE;
+    }
+
+    public void SetDifficultyMedium()
+    {
+        Diff = Difficulties.MOYEN;
+    }
 
     public void Validate()
     {
@@ -68,6 +148,8 @@ Etat connexion : @identification.Connected
         identification.Player.FiringBoard = identification.Ia.GameBoard;
         identification.Ia.FiringBoard = identification.Player.GameBoard;
         identification.Game.Player = p;
+        identification.Game.Difficuty = Diff;
+        identification.Difficulty = Diff;
         NavManager.NavigateTo("/Game");
     }
 
@@ -96,6 +178,12 @@ Etat connexion : @identification.Connected
         Ship tempShip = (Ship)s.Clone();
         if (dir == "spawn")
         {
+            if (Placed.Contains(s))
+            {
+                gb.Remove(s);
+                gb.Add(s);
+                return;
+            }
             if (!tempGB.IsAddable(tempShip))
             {
                 message = dir + " not allowed !";
@@ -140,11 +228,11 @@ Etat connexion : @identification.Connected
         }
         else
         {
-        Spawn();
+            Spawn();
         }
     }
     #endregion Movements
-    
+
     #region Drawings
     public void DrawWithPlaced()
     {
@@ -210,6 +298,8 @@ Etat connexion : @identification.Connected
     public void Spawn()
     {
         Move("spawn");
+        s.GenerateTiles();
+        s.GenerateNear();
     }
 
     public void Destroyer()
