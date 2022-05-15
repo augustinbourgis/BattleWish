@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GMzDriOrNBxcJrSjJ+f2h5gQ3lSxfmzUXmMINTEKZQQ=",
+  "Hash": "MrCslgj7gUHlhQwn49vqCiyc4sGZGrAW1XxniS2CQQ8=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -340,6 +340,23 @@
       "OriginalItemSpec": "wwwroot\\favicon.ico"
     },
     {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\anchor.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/anchor.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\anchor.svg"
+    },
+    {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\background3.jpg",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
@@ -355,6 +372,40 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\background3.jpg"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\chest.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/chest.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\chest.svg"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\flag.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/flag.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\flag.svg"
     },
     {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\ManPirate.svg",
@@ -406,6 +457,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\RegistrationLogInBackground.svg"
+    },
+    {
+      "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\ship.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/ship.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\ship.svg"
     },
     {
       "Identity": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\WomanPirate.svg",

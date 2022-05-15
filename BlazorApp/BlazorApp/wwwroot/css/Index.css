@@ -1,1 +1,17 @@
-﻿
+﻿main {
+    background-image: url(/img/background3.jpg);
+    padding-top: 200px;
+    text-align: center;
+    background-attachment: relative;
+    background-position: center center;
+    min-height: 700px;
+    width: 100%;
+    background-size: 100%;
+    background-size: cover;
+}
+
+.top-row[b-3dsd3z3yec] {
+    background-color: #f7f7f700;
+    border-bottom: 0px solid #d6d5d5;
+    background-image: none;
+}

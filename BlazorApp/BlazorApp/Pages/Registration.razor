@@ -10,10 +10,12 @@
 @inject IConfiguration _config
 @inject Identification identification
 @inject SignUp signUp
+@inject NavigationManager NavManager
 @inherits ComponentBase
 
 
 <link href="/css/Registration.css" rel="stylesheet" />
+
 
 <div class="container">
     <div class="row">
@@ -32,16 +34,16 @@
                 <ValidationMessage For="() => signUp.Login"/>
               </div>
               <div class="container-image-checkbox">
-                  <InputRadioGroup Name="Sex" @bind-Value="signUp.IsMale">
+                  <InputRadioGroup Name="Gender" @bind-Value="signUp.IsMale">
                   <div class="image-checkbox">
                       <label class="custom-control-label" for="Man">
-                        <InputRadio id="Man" class="custom-control-input" Name="Sex" Value=true hidden/>
+                        <InputRadio id="Man" class="custom-control-input" Name="Gender" Value=true hidden/>
                         <img src="/img/ManPirate.svg" alt="#" class="img-Form">
                       </label>
                 </div>
                 <div class="image-checkbox">
                     <label class="custom-control-label" for="Woman">
-                        <InputRadio id="Woman" class="custom-control-input" Name="Sex" Value=false hidden/>
+                        <InputRadio id="Woman" class="custom-control-input" Name="Gender" Value=false hidden/>
                         <img src="/img/WomanPirate.svg" alt="#" class="img-Form">
                     </label>
                 </div>
@@ -76,18 +78,17 @@
 	<div>
     </div>
 
-    <p>@identification.Connected</p>
-
 @code {
     List<UserModel> user;
     bool IsUnique;
     string loginErrorState = "fade";
+    string password = "";
 
     private async Task InsertUser()
     {
         string sql = "insert into user (login, email, password, isMale) values (@Login, @Email, @Password, @isMale );";
 
-        await _data.SaveData(sql, new { Login = signUp.Login, Email = signUp.Email, Password = signUp.Password, isMale = signUp.IsMale}, _config.GetConnectionString("default"));
+        await _data.SaveData(sql, new { Login = signUp.Login, Email = signUp.Email, Password = password, isMale = signUp.IsMale}, _config.GetConnectionString("default"));
 
         await OnInitializedAsync();
     }
@@ -115,7 +116,7 @@
             byte[] sourceBytes = Encoding.UTF8.GetBytes(signUp.Password);
             byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
             string hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
-            signUp.Password = hash;
+            password = hash;
         }
     }
 
@@ -129,6 +130,14 @@
             identification.LogIn(signUp.Login, false, signUp.IsMale.Value);
         }
         
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(identification.Connected){
+			NavManager.NavigateTo("/", forceLoad: true);
+		}
+        return base.OnAfterRenderAsync(firstRender);
     }
 
     

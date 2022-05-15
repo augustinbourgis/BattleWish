@@ -8,6 +8,7 @@
 @inject Identification identification
 @inject IDataAccess _data
 @inject IConfiguration _config
+@inject NavigationManager NavManager
 
 <link href="/css/LogIn.css" rel="stylesheet" />
 
@@ -22,6 +23,9 @@
 						<EditForm Model="@identification" OnValidSubmit="@HandleValidSubmit">
 							<DataAnnotationsValidator />
 							<ValidationSummary />
+							<div class="alert alert-danger alert-dismissible fade @loginErrorState" role="alert">
+								<strong>Incorrect password</strong>
+							</div>
 							<div class="form-label-group">
 								<InputText id="inputLogin" class="form-control" @bind-Value="identification.Login" />
 								<label for="inputLogin">Login</label>
@@ -38,13 +42,11 @@
 		</div>
 	</div>
 
-
-
-<p>Etat connexion : @identification.Connected</p>
-
 @code {
 	List<UserModel> user;
 	bool CorrectPassword;
+	string loginErrorState = "fade";
+	string password = "";
 
 	private async Task GetUser()
 	{
@@ -60,7 +62,7 @@
 			byte[] sourceBytes = Encoding.UTF8.GetBytes(identification.Password);
 			byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
 			string hash = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
-			identification.Password = hash;
+			password = hash;
 		}
 	}
 
@@ -69,9 +71,13 @@
 		CorrectPassword = false;
 		await PasswordHash();
 
-		if(user[0].Password == identification.Password)
+		if(user[0].Password == password)
 		{
 			CorrectPassword = true;
+		}
+		else
+		{
+			loginErrorState = "show";
 		}
 	}
 
@@ -86,4 +92,13 @@
 		}
 		
     }
+
+	protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(identification.Connected){
+			NavManager.NavigateTo("/", forceLoad: true);
+		}
+        return base.OnAfterRenderAsync(firstRender);
+    }
+
 }

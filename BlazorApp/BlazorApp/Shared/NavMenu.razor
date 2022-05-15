@@ -1,10 +1,11 @@
 ﻿@inject Identification identification
+@inject NavigationManager NavManager
 
 <link href="/css/NavBar.css" rel="stylesheet" />
 
 <div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">BlazorApp</a>
+        <a class="navbar-brand" href="">BattleWish</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -13,52 +14,86 @@
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        @{
+            <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <img src="/img/anchor.svg" alt="Person" class="iconNavBar">
+                <span class="oi" aria-hidden="true"></span> Home
             </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Game">
-                <span class="oi oi-play-circle" aria-hidden="true"></span> Game
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Map">
-                <span class="oi oi-map" aria-hidden="true"></span> Map
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="LogIn">
-                <span class="oi oi-person" aria-hidden="true"></span> LogIn
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="Registration">
-                <span class="oi oi-person" aria-hidden="true"></span> Sign up
-            </NavLink>
-        </div>
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="PersonalSpace">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Personal space
-            </NavLink>
-        </div>
-    </nav>
-    <div class="customCard">
-            <img src="/img/ManPirate.svg" alt="Person" class="card__image">
-            <p class="card__name">@identification.Login</p>
-            <div class="grid-container">
-
-                <div class="grid-child-posts">
-                15 Wins
-                </div>
-
-                <div class="grid-child-followers">
-                 10 Looses
-                </div>
-
             </div>
-         </div>
+            if (!identification.Connected)
+            {
+               <div class="nav-item px-3">
+                <NavLink class="nav-link" href="LogIn">
+                    <span class="oi oi-person" aria-hidden="true"></span> LogIn
+                </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Registration">
+                        <span class="oi oi-person" aria-hidden="true"></span> Sign up
+                    </NavLink>
+                </div> 
+            }
+            
+            if (identification.Connected)
+            {
+                <div class="nav-item px-3">
+                <NavLink class="nav-link" href="Game">
+                    <img src="/img/ship.svg" alt="Person" class="iconNavBar">
+                    <span class="oi" aria-hidden="true"></span> Game
+                </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="Map">
+                        <img src="/img/flag.svg" alt="Person" class="iconNavBar">
+                        <span class="oi" aria-hidden="true"></span> Map
+                    </NavLink>
+                </div>
+                <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="PersonalSpace">
+                        <img src="/img/chest.svg" alt="Person" class="iconNavBar">
+                        <span class="oi" aria-hidden="true"></span> Personal space
+                    </NavLink>
+                </div>
+            }
+            
+        }
+        
+    </nav>
+    @{
+        if (identification.Connected)
+        {
+
+            <div class="customCard">
+                @{
+                    if (identification.Current.IsMale)
+                    {
+                        <img src="/img/ManPirate.svg" alt="Person" class="card__image">
+                    }
+                 }
+                 @{
+                    if (!identification.Current.IsMale)
+                    {
+                        <img src="/img/WomanPirate.svg" alt="Person" class="card__image">
+                    }
+                 }
+                <p class="card__name">@identification.Login</p>
+                <div class="grid-container">
+
+                    <div class="grid-child-posts">
+                    15 Wins
+                    </div>
+
+                    <div class="grid-child-followers">
+                     10 Looses
+                    </div>
+
+                </div>
+                <button class="btn btn-info" @onclick="LogOut"><span class="glyphicon glyphicon-log-out"></span> Log out</button>
+             </div>
+        }
+    }
+    
 </div>
 
 @code {
@@ -69,5 +104,11 @@
     private void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    private void LogOut()
+    {
+        identification.Deconnect();
+        NavManager.NavigateTo("/", forceLoad: true);
     }
 }

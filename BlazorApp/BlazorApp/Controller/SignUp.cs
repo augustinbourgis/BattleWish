@@ -2,7 +2,6 @@
 {
     using System;
     using System.ComponentModel.DataAnnotations;
-    using Controller.CustomValidators;
     public class SignUp
     {
 
@@ -10,7 +9,7 @@
         [StringLength(20, ErrorMessage = "Login too long (20 character limit).")]
         public string? Login { get; set; }
 
-        [Required(ErrorMessage = "Sex is required")]
+        [Required(ErrorMessage = "Gender is required")]
         public bool? IsMale { get; set; }
 
         [Required]

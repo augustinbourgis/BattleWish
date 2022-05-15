@@ -3,7 +3,7 @@
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
 @using BlazorApp.Controller;
-
+@inject NavigationManager NavManager
 @inject Identification identification
 
 Etat connexion : @identification.Connected
@@ -243,4 +243,12 @@ Etat connexion : @identification.Connected
         return null;
     }
     #endregion Spawners
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(!identification.Connected){
+			NavManager.NavigateTo("/", forceLoad: true);
+		}
+        return base.OnAfterRenderAsync(firstRender);
+    }
 }
