@@ -1,6 +1,9 @@
-﻿@inject Identification identification
+﻿@using BlazorApp.Models
+@using DataLibrary
+@inject Identification identification
 @inject NavigationManager NavManager
-
+@inject IDataAccess _data
+@inject IConfiguration _config
 <link href="/css/NavBar.css" rel="stylesheet" />
 
 <div class="top-row ps-3 navbar navbar-dark">
@@ -55,6 +58,15 @@
                         <span class="oi" aria-hidden="true"></span> Personal space
                     </NavLink>
                 </div>
+                if (identification.Current.IsAdmin)
+                {
+                    <div class="nav-item px-3">
+                    <NavLink class="nav-link" href="AdministrationSpace">
+                        <img src="/img/PirateHat.svg" alt="Person" class="iconNavBar">
+                        <span class="oi" aria-hidden="true"></span> Administration
+                    </NavLink>
+                </div>
+                }
             }
             
         }
@@ -81,11 +93,11 @@
                 <div class="grid-container">
 
                     <div class="grid-child-posts">
-                    15 Wins
+                    @VictoryCount[0] Victory
                     </div>
 
                     <div class="grid-child-followers">
-                     10 Looses
+                     @DefeatCount[0] Defeat
                     </div>
 
                 </div>
@@ -98,6 +110,10 @@
 
 @code {
     private bool collapseNavMenu = true;
+    List<UserModel> user;
+    List<int> VictoryCount;
+    List<int> DefeatCount;
+
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
 
@@ -110,5 +126,27 @@
     {
         identification.Deconnect();
         NavManager.NavigateTo("/", forceLoad: true);
+    }
+
+    private async Task GetVictoryCount()
+    {
+        string sql = "select count(VictoryForPlayer) from history where PlayerPseudo like'"+identification.Login+"' and VictoryForPlayer = true";
+
+        VictoryCount = await _data.LoadData<int, dynamic>(sql, new { }, _config.GetConnectionString("default"));
+
+    }
+
+    private async Task GetDefeatCount()
+    {
+        string sql = "select count(VictoryForPlayer) from history where PlayerPseudo like'"+identification.Login+"' and VictoryForPlayer = false";
+
+        DefeatCount = await _data.LoadData<int, dynamic>(sql, new { }, _config.GetConnectionString("default"));
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        GetVictoryCount();
+        GetDefeatCount();
     }
 }

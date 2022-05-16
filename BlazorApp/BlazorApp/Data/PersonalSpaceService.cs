@@ -31,7 +31,7 @@ namespace BlazorApp.Data
             MaxPageNumber = (int) Math.Ceiling((float) allHistory.Count()/10);
         }
 
-        public Task<PersonalSpaceModel[]> GetPersonalSpaceAsync(string login, IDataAccess data, IConfiguration config, int page)
+        public Task<HistoryModel[]> GetPersonalSpaceAsync(string login, IDataAccess data, IConfiguration config, int page)
         {
             page--;
             _data = data;
@@ -40,7 +40,7 @@ namespace BlazorApp.Data
             GetMaxPageNumber(login);
             if (history != null)
             {
-                return Task.FromResult(Enumerable.Range(0, history.Count).Select(index => new PersonalSpaceModel
+                return Task.FromResult(Enumerable.Range(0, history.Count).Select(index => new HistoryModel
                 {
                     IALevel = history[index].IALevel,
                     VictoryForPlayer = history[index].VictoryForPlayer,
@@ -53,7 +53,7 @@ namespace BlazorApp.Data
             }
             else
             {
-                return Task.FromResult(new PersonalSpaceModel[0]);
+                return Task.FromResult(new HistoryModel[0]);
             }
             
         }

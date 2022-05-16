@@ -1,0 +1,139 @@
+﻿@page "/AdministrationSpace"
+@using BlazorApp.Data
+@using DataLibrary
+@using Models
+@inject Identification identification
+@inject NavigationManager NavManager
+@inject AdministrationSpaceService AdminService
+@inject IDataAccess _data
+@inject IConfiguration _config
+<PageTitle>Administration space</PageTitle>
+
+
+
+
+<h1>Administration space</h1>
+
+@if (stats == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IALevel</th>
+                <th>PlayerPseudo</th>
+                <th>Status</th>
+                <th>IAShoot</th>
+                <th>PlayerShoot</th>
+                <th>Game time (minutes)</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if(stats != null)
+            {
+                @foreach (var stat in stats)
+                {
+                    <tr>
+                        <td>@stat.IALevel</td>
+                        <td>@stat.PlayerPseudo</td>
+                        <td>@stat.VictoryForPlayer</td>
+                        <td>@stat.IAShoot</td>
+                        <td>@stat.PlayerShoot</td>
+                        <td>@stat.GameTime.TotalMinutes</td>
+                    </tr>
+                }
+            }
+            
+        </tbody>
+    </table>
+    <div class="btn-toolbar justify-content-center" role="toolbar" style="margin: 0;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-default color-blue @BackwardButtonsClass" @onclick="fastBackward"><i class="oi oi-media-skip-backward"></i></button>
+            <button type="button" class="btn btn-default color-blue @BackwardButtonsClass" @onclick="stepBackward"><i class="oi oi-caret-left"></i></button>
+            <label class="btn btn-default text-faded">@PageNumber of @MaxPageNumber</label>
+            <button type="button" class="btn btn-default color-blue @ForwardButtonsClass" @onclick="stepForward"><i class="oi oi-caret-right" ></i></button>
+            <button type="button" class="btn btn-default color-blue @ForwardButtonsClass" @onclick="fastForward"><i class="oi oi-media-skip-forward"></i></button>
+        </div>
+    </div>
+}
+
+@code {
+    private HistoryModel[]? stats;
+    public int PageNumber { get; set; } = 1;
+
+    public int MaxPageNumber { get; set; } = 0;
+
+    [Parameter]
+    public string BackwardButtonsClass {get; set;} = "disabled";
+
+    [Parameter]
+    public string ForwardButtonsClass {get; set;} = "disabled";
+
+    private async Task ButtonChangeState()
+    {
+        if(PageNumber == 1)
+        {
+            BackwardButtonsClass = "disabled";
+        }
+        else
+        {
+            BackwardButtonsClass = "";
+        }
+
+        if(PageNumber == MaxPageNumber)
+        {
+            ForwardButtonsClass = "disabled";
+        }
+        else
+        {
+            ForwardButtonsClass = "";
+        }
+
+    }
+
+    private async Task stepBackward()
+    {
+        PageNumber--;
+        await OnInitializedAsync();
+        await ButtonChangeState();
+    }
+
+    private async Task fastBackward()
+    {
+        PageNumber = 1;
+        await OnInitializedAsync();
+        await ButtonChangeState();
+    }
+
+    private async Task stepForward()
+    {
+        PageNumber++;
+        await OnInitializedAsync();
+        await ButtonChangeState();    
+    }
+
+    private async Task fastForward()
+    {
+        PageNumber = MaxPageNumber;
+        await OnInitializedAsync();
+        await ButtonChangeState(); 
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        stats = await AdminService.GetPersonalSpaceAsync(_data, _config, PageNumber);
+        MaxPageNumber = AdminService.MaxPageNumber;
+        await ButtonChangeState();
+    }
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(!identification.Connected){
+			NavManager.NavigateTo("/", forceLoad: true);
+		}
+        return base.OnAfterRenderAsync(firstRender);
+    }
+}

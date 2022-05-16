@@ -1,6 +1,7 @@
 ﻿@page "/PersonalSpace"
 @using BlazorApp.Data
 @using DataLibrary
+@using Models
 @inject Identification identification
 @inject NavigationManager NavManager
 @inject PersonalSpaceService SpaceService
@@ -58,7 +59,7 @@ else
 }
 
 @code {
-    private PersonalSpaceModel[]? stats;
+    private HistoryModel[]? stats;
     public int PageNumber { get; set; } = 1;
 
     public int MaxPageNumber { get; set; } = 0;

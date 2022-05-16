@@ -15,6 +15,7 @@ builder.Services.AddScoped<Identification>();
 builder.Services.AddBlazoredModal();
 
 builder.Services.AddSingleton<PersonalSpaceService>();
+builder.Services.AddSingleton<AdministrationSpaceService>();
 builder.Services.AddSingleton<Identification>();
 builder.Services.AddScoped<SignUp>();
 builder.Services.AddSingleton<IDataAccess, DataAccess>();
