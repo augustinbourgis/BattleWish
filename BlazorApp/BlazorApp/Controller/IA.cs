@@ -29,7 +29,7 @@ namespace BlazorApp.Controller
             return o;
         }
 
-        // TEST
+        
         public IA()
         {
             Ships.Add((ShipFactory.Destroyer()));
@@ -45,49 +45,6 @@ namespace BlazorApp.Controller
             while (!PlaceShipsRandomly())
             {
             }
-        }
-
-        // TEST
-        public bool PlaceBoatRandomly(ref int attempt)
-        {
-            attempt--;
-            if (attempt < 0)
-            {
-                int newAttempt = 300;
-                if (PlaceBoatRandomly(ref newAttempt))
-                {
-                    return true;
-                }
-            }
-            List<Ship> listShip = new List<Ship>();
-            foreach(Ship ship in Ships)
-            {
-                listShip.Add(ship);
-            }
-            foreach (Ship s in Ships)
-            {
-                s.TopLeft.X = Utility.Random(0, GameBoard.Width);
-                s.TopLeft.Y = Utility.Random(0, GameBoard.Height);
-                s.OrientationType = GetProb();
-                s.GenerateTiles();
-                if (GameBoard.IsAddable(s))
-                {
-                    GameBoard.Add(s);
-                    listShip.Remove(s);
-                    if (PlaceBoatRandomly(ref listShip, ref attempt))
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (PlaceBoatRandomly(ref attempt))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return true;
         }
 
         public bool PlaceShipsRandomly()
@@ -136,53 +93,6 @@ namespace BlazorApp.Controller
                 }
             }
             return list;
-        }
-
-        // TEST
-        public bool PlaceBoatRandomly(ref List<Ship> listShip, ref int attempt)
-        {
-            attempt--;
-            if (attempt < 0)
-            {
-                int newAttempt = 100;
-                var WorkingShips = new List<Ship>();
-                WorkingShips.Add(ShipFactory.Titanic());
-                WorkingShips.Add(ShipFactory.Battleship());
-                WorkingShips.Add(ShipFactory.Carrier());
-                WorkingShips.Add(ShipFactory.Submarine());
-                WorkingShips.Add(ShipFactory.Cruiser());
-                WorkingShips.Add((ShipFactory.Destroyer()));
-                GameBoard = GameBoardFactory.GameBoard();
-                if (PlaceBoatRandomly(ref WorkingShips,ref newAttempt))
-                {
-                    return true;
-                }
-            }
-            if (listShip.Count == 0) return true;
-            foreach (Ship s in listShip)
-            {
-                s.TopLeft.X = Utility.Random(0, GameBoard.Width);
-                s.TopLeft.Y = Utility.Random(0, GameBoard.Height);
-                s.OrientationType = GetProb();
-                s.GenerateTiles();
-                if (GameBoard.IsAddable(s))
-                {
-                    GameBoard.Add(s);
-                    listShip.Remove(s);
-                    if (PlaceBoatRandomly(ref listShip, ref attempt))
-                    {
-                        return true;
-                    }
-                }
-                else
-                {
-                    if (PlaceBoatRandomly(ref listShip, ref attempt))
-                    {
-                        return true;
-                    }
-                }
-            }
-            return true;
         }
     }
 }

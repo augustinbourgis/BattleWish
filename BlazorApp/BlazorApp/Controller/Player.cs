@@ -16,7 +16,7 @@ namespace BlazorApp.Controller
 
         public Player(string login)
         {
-            Name = name;
+            Login = login;
             GenerateShips();
             GameBoard = GameBoardFactory.GameBoard();
             FiringBoard = GameBoardFactory.GameBoard();
@@ -24,7 +24,6 @@ namespace BlazorApp.Controller
 
         public bool GenerateShips()
         {
-            Login = login;
             Ships = new List<Ship>()
             {
             ShipFactory.Destroyer(),
@@ -42,15 +41,7 @@ namespace BlazorApp.Controller
             Login = login;
             IsAdmin = isAdmin;
             IsMale = isMale;
-            Ships = new List<Ship>()
-            {
-            ShipFactory.Destroyer(),
-            ShipFactory.Cruiser(),
-            ShipFactory.Submarine(),
-            ShipFactory.Battleship(),
-            ShipFactory.Carrier(),
-            ShipFactory.Titanic()
-            };
+            GenerateShips();
             GameBoard = GameBoardFactory.GameBoard();
             FiringBoard = GameBoardFactory.GameBoard();
         }

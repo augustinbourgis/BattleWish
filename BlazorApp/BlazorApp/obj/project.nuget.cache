@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "9AZmlrkSiysGkGqcU6IAic+KI5kCyhnjtPC+b1x1KdKiqhvXvTKXdLDZ5WliiIOSjc78G9vYr3uG6jycxWa15w==",
+  "dgSpecHash": "Dv8Ylrr+Nc3LEy4CIf1qzAKsUUyY1FzF5X8F3D5p78zaWeDyOiWq7yDP0oEhN6891sVX/2mboJwFJ4Fzwse3QA==",
   "success": true,
-  "projectFilePath": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+  "projectFilePath": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Augus\\.nuget\\packages\\blazored.modal\\6.0.1\\blazored.modal.6.0.1.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
