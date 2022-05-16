@@ -62,6 +62,9 @@
           "lib/net5.0/Google.Protobuf.dll": {}
         }
       },
+      "JetBrains.dotCover.CommandLineTools/2022.1.1": {
+        "type": "package"
+      },
       "K4os.Compression.LZ4/1.2.6": {
         "type": "package",
         "dependencies": {
@@ -2343,6 +2346,142 @@
         "lib/netstandard2.0/Google.Protobuf.dll",
         "lib/netstandard2.0/Google.Protobuf.pdb",
         "lib/netstandard2.0/Google.Protobuf.xml"
+      ]
+    },
+    "JetBrains.dotCover.CommandLineTools/2022.1.1": {
+      "sha512": "JLIRZ3ZzIanX1NId4XcWL+SceehaCzyxiAhV3N48V7yKQc9pwD2YcQTPkHSpdtytgIYQAtTID6Ch2IuVByekGw==",
+      "type": "package",
+      "path": "jetbrains.dotcover.commandlinetools/2022.1.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "jetbrains.dotcover.commandlinetools.2022.1.1.nupkg.sha512",
+        "jetbrains.dotcover.commandlinetools.nuspec",
+        "tools/DeploymentPackagingIdentity.txt",
+        "tools/JetBrains.Annotations.dll",
+        "tools/JetBrains.Common.MemoryMappedStorage.dll",
+        "tools/JetBrains.Common.Remotable.Agent.dll",
+        "tools/JetBrains.Common.Remotable.CrossDomain.dll",
+        "tools/JetBrains.Common.Remotable.Proxy.dll",
+        "tools/JetBrains.Common.Remotable.Util.dll",
+        "tools/JetBrains.Common.Remotable.dll",
+        "tools/JetBrains.Common.SignatureDefinitions.dll",
+        "tools/JetBrains.Common.Util.Metadata.dll",
+        "tools/JetBrains.Common.Util.dll",
+        "tools/JetBrains.Etw.dll",
+        "tools/JetBrains.Lifetimes.dll",
+        "tools/JetBrains.Platform.ComponentModel.dll",
+        "tools/JetBrains.Platform.Core.dll",
+        "tools/JetBrains.Platform.Interop.dll",
+        "tools/JetBrains.Platform.Metadata.dll",
+        "tools/JetBrains.Platform.RdFramework.Shell.dll",
+        "tools/JetBrains.Platform.Shell.dll",
+        "tools/JetBrains.Platform.Util.dll",
+        "tools/JetBrains.Profiler.Api.dll",
+        "tools/JetBrains.Profiler.Snapshot.Interface.dll",
+        "tools/JetBrains.Profiler.Snapshot.dll",
+        "tools/JetBrains.Profiler.Util.dll",
+        "tools/JetBrains.Profiler.Windows.Impl.dll",
+        "tools/JetBrains.Profiler.Windows.Impl.dll.config",
+        "tools/JetBrains.Profiler.Windows.RemoteAgent.dll",
+        "tools/JetBrains.Profiler.Windows.RemoteAgent.dll.config",
+        "tools/JetBrains.Profiler.Windows.RemoteApi.dll",
+        "tools/JetBrains.Profiler.Windows.SysTools.dll",
+        "tools/JetBrains.Profiler.Windows.dll",
+        "tools/JetBrains.Profiler.dll",
+        "tools/JetBrains.ProfilingInstance.dll",
+        "tools/JetBrains.RdFramework.Reflection.dll",
+        "tools/JetBrains.RdFramework.dll",
+        "tools/JetBrains.ReSharper.TestRunner.Abstractions.dll",
+        "tools/JetBrains.dotCover.ClientCore.dll",
+        "tools/JetBrains.dotCover.DataAccess.dll",
+        "tools/JetBrains.dotCover.MSBuild.Utils.dll",
+        "tools/JetBrains.dotCover.MsFakesDataCollector.dll",
+        "tools/JetBrains.dotCover.Shared.dll",
+        "tools/JetBrains.dotCover.TcpInProcDataCollector.dll",
+        "tools/JetBrains.dotCover.Workspace.dll",
+        "tools/License/jetbrains_license.md",
+        "tools/Microsoft.TestPlatform.CommunicationUtilities.dll",
+        "tools/Microsoft.TestPlatform.CoreUtilities.dll",
+        "tools/Microsoft.TestPlatform.PlatformAbstractions.dll",
+        "tools/Microsoft.TestPlatform.Utilities.dll",
+        "tools/Microsoft.TestPlatform.VsTestConsole.TranslationLayer.dll",
+        "tools/Microsoft.VisualStudio.TestPlatform.Common.dll",
+        "tools/Microsoft.VisualStudio.TestPlatform.ObjectModel.dll",
+        "tools/Newtonsoft.Json.dll",
+        "tools/NuGet.Frameworks.dll",
+        "tools/System.Buffers.dll",
+        "tools/System.Collections.Immutable.dll",
+        "tools/System.Configuration.ConfigurationManager.dll",
+        "tools/System.Diagnostics.EventLog.dll",
+        "tools/System.Drawing.Common.dll",
+        "tools/System.IO.FileSystem.AccessControl.dll",
+        "tools/System.Memory.dll",
+        "tools/System.Numerics.Vectors.dll",
+        "tools/System.Reflection.Metadata.dll",
+        "tools/System.Runtime.CompilerServices.Unsafe.dll",
+        "tools/System.Runtime.InteropServices.RuntimeInformation.dll",
+        "tools/System.Security.AccessControl.dll",
+        "tools/System.Security.Cryptography.ProtectedData.dll",
+        "tools/System.Security.Permissions.dll",
+        "tools/System.Security.Principal.Windows.dll",
+        "tools/System.ServiceProcess.ServiceController.dll",
+        "tools/System.Threading.Tasks.Extensions.dll",
+        "tools/dotCover.exe",
+        "tools/linux-arm64.dbg.Etw.symref",
+        "tools/linux-arm64.dbg.Profiler.symref",
+        "tools/linux-arm64.rel.Etw.symref",
+        "tools/linux-arm64.rel.Profiler.symref",
+        "tools/linux-musl-arm64.dbg.Etw.symref",
+        "tools/linux-musl-arm64.dbg.Profiler.symref",
+        "tools/linux-musl-arm64.rel.Etw.symref",
+        "tools/linux-musl-arm64.rel.Profiler.symref",
+        "tools/linux-musl-x64.dbg.Etw.symref",
+        "tools/linux-musl-x64.dbg.Profiler.symref",
+        "tools/linux-musl-x64.rel.Etw.symref",
+        "tools/linux-musl-x64.rel.Profiler.symref",
+        "tools/linux-x64.dbg.Etw.symref",
+        "tools/linux-x64.dbg.Profiler.symref",
+        "tools/linux-x64.rel.Etw.symref",
+        "tools/linux-x64.rel.Profiler.symref",
+        "tools/macos-arm64.dbg.Etw.symref",
+        "tools/macos-arm64.dbg.Profiler.symref",
+        "tools/macos-arm64.rel.Etw.symref",
+        "tools/macos-arm64.rel.Profiler.symref",
+        "tools/macos-x64.dbg.Etw.symref",
+        "tools/macos-x64.dbg.Profiler.symref",
+        "tools/macos-x64.rel.Etw.symref",
+        "tools/macos-x64.rel.Profiler.symref",
+        "tools/teamcity-plugin.xml",
+        "tools/windows-x64.dbg.Etw.symref",
+        "tools/windows-x64.dbg.Profiler.symref",
+        "tools/windows-x64.rel.Etw.symref",
+        "tools/windows-x64.rel.Profiler.symref",
+        "tools/windows-x64/JetBrains.Process.Elevator.dll",
+        "tools/windows-x64/JetBrains.Profiler.Core.dll",
+        "tools/windows-x64/JetBrains.Profiler.CoreApi.dll",
+        "tools/windows-x64/JetBrains.Profiler.CoreTransparent.dll",
+        "tools/windows-x64/JetBrains.Profiler.PdbServer.exe",
+        "tools/windows-x64/JetBrains.Profiler.WinRTFakeDebugger.exe",
+        "tools/windows-x64/JetBrains.Profiler.WinRTHelper.exe",
+        "tools/windows-x64/mono-profiler-jb.dll",
+        "tools/windows-x64/symsrv.dll",
+        "tools/windows-x64/symsrv.yes",
+        "tools/windows-x86.dbg.Etw.symref",
+        "tools/windows-x86.dbg.Profiler.symref",
+        "tools/windows-x86.rel.Etw.symref",
+        "tools/windows-x86.rel.Profiler.symref",
+        "tools/windows-x86/JetBrains.Process.Elevator.dll",
+        "tools/windows-x86/JetBrains.Profiler.Core.dll",
+        "tools/windows-x86/JetBrains.Profiler.CoreApi.dll",
+        "tools/windows-x86/JetBrains.Profiler.CoreTransparent.dll",
+        "tools/windows-x86/JetBrains.Profiler.PdbServer.exe",
+        "tools/windows-x86/JetBrains.Profiler.WinRTFakeDebugger.exe",
+        "tools/windows-x86/JetBrains.Profiler.WinRTHelper.exe",
+        "tools/windows-x86/mono-profiler-jb.dll",
+        "tools/windows-x86/symsrv.dll",
+        "tools/windows-x86/symsrv.yes"
       ]
     },
     "K4os.Compression.LZ4/1.2.6": {
@@ -7948,6 +8087,8 @@
     "net6.0": [
       "Blazored.Modal >= 6.0.1",
       "Dapper >= 2.0.123",
+      "DataLibrary >= 1.0.0",
+      "JetBrains.dotCover.CommandLineTools >= 2022.1.1",
       "MSTest.TestAdapter >= 2.2.10",
       "MSTest.TestFramework >= 2.2.10",
       "Microsoft.NET.Test.Sdk >= 17.1.0",
@@ -7956,19 +8097,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\MyST3\\.nuget\\packages\\": {}
+    "C:\\Users\\Augus\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+      "projectUniqueName": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
       "projectName": "BlazorApp",
-      "projectPath": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
-      "packagesPath": "C:\\Users\\MyST3\\.nuget\\packages\\",
-      "outputPath": "E:\\BattleWish\\BattleWish\\BlazorApp\\BlazorApp\\obj\\",
+      "projectPath": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
+      "packagesPath": "C:\\Users\\Augus\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\MyST3\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Augus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7982,8 +8128,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "E:\\BattleWish\\BattleWish\\BlazorApp\\DataLibrary\\DataLibrary.csproj": {
-              "projectPath": "E:\\BattleWish\\BattleWish\\BlazorApp\\DataLibrary\\DataLibrary.csproj"
+            "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\DataLibrary\\DataLibrary.csproj": {
+              "projectPath": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\DataLibrary\\DataLibrary.csproj"
             }
           }
         }
@@ -8005,6 +8151,12 @@
           "Dapper": {
             "target": "Package",
             "version": "[2.0.123, )"
+          },
+          "JetBrains.dotCover.CommandLineTools": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[2022.1.1, )"
           },
           "MSTest.TestAdapter": {
             "target": "Package",

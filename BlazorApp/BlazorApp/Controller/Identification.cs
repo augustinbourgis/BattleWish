@@ -7,8 +7,6 @@ namespace BlazorApp.Controller
     public class Identification
     {
         public Player Current { get; set; }
-        public string Login;
-        public string Password;
         public Player Player;
         public Game Game;
         public Difficulties Difficulty = Difficulties.FACILE;
@@ -28,6 +26,12 @@ namespace BlazorApp.Controller
         {
             Login = login;
             Current = new Player(Login, isAdmin, isMale);
+            if (Connected)
+            {
+                Ia = new IA();
+                Game = new Game(Difficulty);
+                Game.Ia = Ia;
+            }
             return Connected;
         }
 

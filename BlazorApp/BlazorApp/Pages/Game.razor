@@ -1,7 +1,7 @@
 ﻿@page "/Game"
 @using BlazorApp.Controller.Enums
 @using BlazorApp.Controller.Factory
-@inject NavigationManager NavManager
+
 @inject Identification identification
 @inject IModalService modal
 @inject NavigationManager NavManager
@@ -40,11 +40,11 @@
         <div class="row">
             <div class="col">
                 <p>You :</p>
-                @((MarkupString)DrawFiring(identification.Player.FiringBoard))
+                @((MarkupString)DrawFiring(identification.Game.Player.FiringBoard))
             </div>
             <div class="col">
                 <p>IA :</p>
-                @((MarkupString)DrawFiring(identification.Ia.FiringBoard))
+                @((MarkupString)DrawFiring(identification.Game.Ia.FiringBoard))
             </div>
         </div>
     </div>
@@ -159,13 +159,5 @@
         }
         temp += "</div>";
         return temp;
-    }
-
-    protected override Task OnAfterRenderAsync(bool firstRender)
-    {
-        if(!identification.Connected){
-			NavManager.NavigateTo("/", forceLoad: true);
-		}
-        return base.OnAfterRenderAsync(firstRender);
     }
 }

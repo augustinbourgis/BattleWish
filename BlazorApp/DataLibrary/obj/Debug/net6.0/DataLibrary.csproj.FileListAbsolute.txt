@@ -10,3 +10,15 @@ E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.dll
 E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\refint\DataLibrary.dll
 E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.pdb
 E:\BattleWish\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\ref\DataLibrary.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.deps.json
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\bin\Debug\net6.0\DataLibrary.pdb
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.AssemblyReference.cache
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfoInputs.cache
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.AssemblyInfo.cs
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\refint\DataLibrary.dll
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\DataLibrary.pdb
+C:\Users\Augus\OneDrive\Documents\CNAM\BattleWish\BlazorApp\DataLibrary\obj\Debug\net6.0\ref\DataLibrary.dll

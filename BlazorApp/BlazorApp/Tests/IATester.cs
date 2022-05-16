@@ -31,5 +31,11 @@ namespace BlazorApp.Tests
             IA ia = new IA();
             Assert.AreEqual(Orientation.DIAG_TR, ia.GetProb(Utility.Random(90, 100)));
         }
+
+        [TestMethod]
+        public void NotUsed_EmptyGameBoard_ThenCount0()
+        {
+
+        }
     }
 }

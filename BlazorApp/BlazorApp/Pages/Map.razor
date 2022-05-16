@@ -2,7 +2,6 @@
 @using BlazorApp.Controller.Enums;
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
-@using BlazorApp.Controller;
 
 @inject Identification identification
 @inject NavigationManager NavManager
@@ -13,7 +12,7 @@ Etat connexion : @identification.Connected
     {
         <button class="btn btn-primary" @onclick="Reset">Reset me</button>
         <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>
-        <button class="btn btn-primary" @onclick="SetDifficultyEasy">Difficulty EZ</button>
+        <button class="btn btn-primary" @onclick="SetDifficultyEasy">smol pp</button>
         <button class="btn btn-primary" @onclick="SetDifficultyMedium">Difficulty Medium</button>
         <style>
             div{
