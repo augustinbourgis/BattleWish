@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Dv8Ylrr+Nc3LEy4CIf1qzAKsUUyY1FzF5X8F3D5p78zaWeDyOiWq7yDP0oEhN6891sVX/2mboJwFJ4Fzwse3QA==",
+  "dgSpecHash": "wnju9cwSy8Bx1y+85l9h4rb6xqzMx4hGAYNv+m+9zlQ1leZoHbT7/1G0rjtiN3YFLvD+RkFEPM4RW/6LON+T0Q==",
   "success": true,
   "projectFilePath": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\BlazorApp.csproj",
   "expectedPackageFiles": [
@@ -9,6 +9,7 @@
     "C:\\Users\\Augus\\.nuget\\packages\\castle.core\\5.0.0\\castle.core.5.0.0.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\dapper\\2.0.123\\dapper.2.0.123.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\google.protobuf\\3.19.4\\google.protobuf.3.19.4.nupkg.sha512",
+    "C:\\Users\\Augus\\.nuget\\packages\\jetbrains.dotcover.commandlinetools\\2022.1.1\\jetbrains.dotcover.commandlinetools.2022.1.1.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\k4os.compression.lz4\\1.2.6\\k4os.compression.lz4.1.2.6.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\k4os.compression.lz4.streams\\1.2.6\\k4os.compression.lz4.streams.1.2.6.nupkg.sha512",
     "C:\\Users\\Augus\\.nuget\\packages\\k4os.hash.xxhash\\1.0.6\\k4os.hash.xxhash.1.0.6.nupkg.sha512",

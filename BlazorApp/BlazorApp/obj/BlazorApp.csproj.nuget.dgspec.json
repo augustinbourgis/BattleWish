@@ -56,6 +56,12 @@
               "target": "Package",
               "version": "[2.0.123, )"
             },
+            "JetBrains.dotCover.CommandLineTools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2022.1.1, )"
+            },
             "MSTest.TestAdapter": {
               "target": "Package",
               "version": "[2.2.10, )"
