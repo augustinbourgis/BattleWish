@@ -6,58 +6,94 @@
 @inject Identification identification
 @inject NavigationManager NavManager
 
-Etat connexion : @identification.Connected
+<link href="/css/Map.css" rel="stylesheet" />
+
 @{
     if (identification.Connected)
     {
-        <button class="btn btn-primary" @onclick="Reset">Reset me</button>
-        <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>
-        <button class="btn btn-primary" @onclick="SetDifficultyEasy">smol pp</button>
-        <button class="btn btn-primary" @onclick="SetDifficultyMedium">Difficulty Medium</button>
-        <style>
-            div{
-                font-size: 0.8em;
-            }
-        </style>
-        if (s != null)
-        {
-            <div>
-                @s.Name;
-                @s.GetType().ToString();
-                @s.TopLeft.X;
-                @s.TopLeft.Y;
-                @s.OrientationType
+        
+        <div class="row wrapper">
+          <div class="col-9">
+            <div class="row">
+              <div class="col-12">
+                @((MarkupString)@Draw())
+              </div>
             </div>
-        }
-        <p>@Placed.Count placed</p>
-        if (Placed.Count == 6)
-        {
-            <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
-        }
-        @message
-        <div>
-            <button class="btn btn-primary" id="aa" @onclick="Spawn">Click me</button>
-            <button class="btn btn-primary" @onclick="Right">🡢</button>
-            <button class="btn btn-primary" @onclick="Bottom">🡣</button>
-            <button class="btn btn-primary" @onclick="Left">🡠</button>
-            <button class="btn btn-primary" @onclick="Top">🡡</button>
-            <br>
-            <button class="btn btn-primary" @onclick="Rotate">Next Rotate</button>
-            <button class="btn btn-primary" @onclick="VerticalRotate">Vertical Rotate</button>
-            <button class="btn btn-primary" @onclick="HorizonthalRotate">Horizonthal Rotate</button>
-            <button class="btn btn-primary" @onclick="DiagBRRotate">Diag BR Rotate</button>
-            <button class="btn btn-primary" @onclick="DiagTRRotate">Diag TR Rotate</button>
+          </div>
+          <div class="col-3 card card-Commands">
+            @{
+                <div class="card-header">
+                    <p>@Placed.Count placed</p>
+                </div>
+                <button class="btn btn-primary" @onclick="Reset">Reset me</button>
+                <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>
+                <button class="btn btn-success" @onclick="SetDifficultyEasy">smol pp</button>
+                <button class="btn btn-warning" @onclick="SetDifficultyMedium">Difficulty Medium</button>
+                if (s != null)
+                {
+                    <div>
+                        @s.Name;
+                        @s.GetType().ToString();
+                        @s.TopLeft.X;
+                        @s.TopLeft.Y;
+                        @s.OrientationType
+                    </div>
+                }
+                
+                if (Placed.Count == 6)
+                {
+                    <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
+                }
+                @message
+                <div class="card-body">
+                    <div class="card-Buttons">
+                    <button class="btn btn-primary" @onclick="Top">🡡</button>
+                    <div class="row">
+                        <div class="col">
+                            <button class="btn btn-primary" @onclick="Left">🡠</button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary" @onclick="Rotate"><span class="oi oi-loop-circular"></span></button>
+                        </div>
+                        <div class="col">
+                            <button class="btn btn-primary" @onclick="Right">🡢</button>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary" @onclick="Bottom">🡣</button>
+                    
+                    </div>
+                    <div>
+                    <div class="row py-2">
+                    <div class="col">
+                    <button class="btn btn-primary" @onclick="VerticalRotate">Rotate <span class="oi oi-minus"></span></button>
+                    </div>
+                    <div class="col">
+                    <button class="btn btn-primary" @onclick="HorizonthalRotate">Rotate |</button>
+                    </div>
+                    </div>
+                    <div class="row py-2">
+                    <div class="col">
+                    <button class="btn btn-primary" @onclick="DiagBRRotate">Rotate \</button>
+                    </div>
+                    <div class="col">
+                    <button class="btn btn-primary" @onclick="DiagTRRotate">Rotate /</button>
+                    </div>
+                    </div>
+                    </div>
 
+                </div>
+                <div class="card card-footer">
+                    <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
+                    <button class="btn btn-primary" @onclick="Cruiser">Cruiser</button>
+                    <button class="btn btn-primary" @onclick="Submarine">Submarine</button>
+                    <button class="btn btn-primary" @onclick="Battleship">Battleship</button>
+                    <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
+                    <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
+                </div>
+            }
+          </div>
         </div>
-        <div>
-            <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
-            <button class="btn btn-primary" @onclick="Cruiser">Cruiser</button>
-            <button class="btn btn-primary" @onclick="Submarine">Submarine</button>
-            <button class="btn btn-primary" @onclick="Battleship">Battleship</button>
-            <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
-            <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
-        </div>
-        @((MarkupString)@Draw())
+        
     }
 }
 
@@ -269,7 +305,7 @@ Etat connexion : @identification.Connected
 
     public string Draw()
     {
-        string temp = "<div class=\"container\" style=\"width: 800px\">";
+        string temp = "<div class=\"container containerMap\" style=\"width: 800px\">";
         int index = 0;
         for(int h = 0; h < gb.Height; h++)
         {
@@ -294,7 +330,7 @@ Etat connexion : @identification.Connected
                     }
                 }
                 Tile t = gb.Tiles[index];
-                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:25px\">{t.X}/{t.Y}</div>";
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:60px\">{t.X}/{t.Y}</div>";
             }
             temp += "</div>";
         }

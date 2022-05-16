@@ -1,0 +1,33 @@
+﻿main {
+    background-image: url(/img/Sea.jpg);
+    padding-top: 100px;
+    text-align: center;
+    background-attachment: relative;
+    background-position: center center;
+    min-height: 700px;
+    width: 100%;
+    background-size: 100%;
+    background-size: cover;
+}
+
+.top-row[b-3dsd3z3yec] {
+    background-color: #f7f7f700;
+    border-bottom: 0px solid #d6d5d5;
+    background-image: none;
+}
+
+.card-Commands {
+    border: 0;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.1);
+    background-image: url(/img/vintage_paper.jpg);
+    background-position: center center;
+    background-size: 100%;
+    background-size: cover;
+}
+
+.card-Buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
