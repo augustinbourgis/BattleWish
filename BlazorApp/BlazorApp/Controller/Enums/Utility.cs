@@ -40,7 +40,6 @@ namespace BlazorApp.Controller.Enums
             return false;
         }
 
-        // TEST
         public static int Index(Tile t, List<Tile> list)
         {
             if (t == null) return -1;
@@ -54,7 +53,6 @@ namespace BlazorApp.Controller.Enums
             return -1;
         }
 
-        // TEST
         public static int Index(Ship s, List<Ship> list)
         {
             if (s == null) return -1;
@@ -99,157 +97,6 @@ namespace BlazorApp.Controller.Enums
             Tiles.Add(t.Right());
             Tiles.Add(t.Left());
             return Tiles;
-        }
-
-        public static List<Tile> GetAllShipShot(IA ia)
-        {
-            List<Tile> shipShot = new List<Tile>(); 
-            foreach (Tile t in ia.FiringBoard.Tiles)
-            {
-                if (t.IsShot && t.IsABoat())
-                {
-                    shipShot.Add(t);
-                }
-            }
-            return shipShot;
-        }
-
-        public static Tile VerifyLeftTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.Right().IsShot && tileToAnalyse.Right().IsABoat())
-            {
-                if (!tileToAnalyse.Left().IsShot)
-                {
-                    return tileToAnalyse.Left();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyRightTileIsProbAShip(Tile tileToAnalyse)
-        {
-            // Ne vérifie pas la grid de jeu
-            Tile t = null;
-            if (tileToAnalyse.Left().IsShot && tileToAnalyse.Left().IsABoat())
-            {
-                if (!tileToAnalyse.Right().IsShot)
-                {
-                    return tileToAnalyse.Right();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyTopTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.Bottom().IsShot && tileToAnalyse.Bottom().IsABoat())
-            {
-                if (!tileToAnalyse.Top().IsShot)
-                {
-                    return tileToAnalyse.Top();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyBottomTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.Top().IsShot && tileToAnalyse.Top().IsABoat())
-            {
-                if (!tileToAnalyse.Bottom().IsShot)
-                {
-                    return tileToAnalyse.Bottom();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyTopRightTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.BottomLeft().IsShot && tileToAnalyse.BottomLeft().IsABoat())
-            {
-                if (!tileToAnalyse.TopRight().IsShot)
-                {
-                    return tileToAnalyse.TopRight();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyBottomLeftTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.TopRight().IsShot && tileToAnalyse.TopRight().IsABoat())
-            {
-                if (!tileToAnalyse.BottomLeft().IsShot)
-                {
-                    return tileToAnalyse.BottomLeft();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyBottomRightTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.TopLeft().IsShot && tileToAnalyse.TopLeft().IsABoat())
-            {
-                if (!tileToAnalyse.BottomRight().IsShot)
-                {
-                    return tileToAnalyse.BottomRight();
-                }
-            }
-            return t;
-        }
-        public static Tile VerifyTopLeftTileIsProbAShip(Tile tileToAnalyse)
-        {
-            Tile t = null;
-            if (tileToAnalyse.BottomRight().IsShot && tileToAnalyse.BottomRight().IsABoat())
-            {
-                if (!tileToAnalyse.TopLeft().IsShot)
-                {
-                    return tileToAnalyse.TopLeft();
-                }
-            }
-            return t;
-        }
-
-        public static List<Tile> GetNextTile(Tile t)
-        {
-            List<Tile> tiles = new List<Tile>();
-            if(VerifyTopTileIsProbAShip(t) != null) tiles.Add(VerifyTopTileIsProbAShip(t));
-            if (VerifyTopRightTileIsProbAShip(t) != null) tiles.Add(VerifyTopRightTileIsProbAShip(t));
-            if (VerifyRightTileIsProbAShip(t) != null) tiles.Add(VerifyRightTileIsProbAShip(t));
-            if (VerifyBottomRightTileIsProbAShip(t) != null) tiles.Add(VerifyBottomRightTileIsProbAShip(t));
-            if (VerifyBottomTileIsProbAShip(t) != null) tiles.Add(VerifyBottomTileIsProbAShip(t));
-            if (VerifyBottomLeftTileIsProbAShip(t) != null) tiles.Add(VerifyBottomLeftTileIsProbAShip(t));
-            if (VerifyLeftTileIsProbAShip(t) != null) tiles.Add(VerifyLeftTileIsProbAShip(t));
-            if (VerifyTopLeftTileIsProbAShip(t) != null) tiles.Add(VerifyTopLeftTileIsProbAShip(t));
-            return tiles;
-        }
-
-        public static List<Tile> GetNextTileToShoot(IA ia)
-        {
-            List <Tile> tiles = new List<Tile>();
-            foreach (Tile t in GetAllShipShot(ia))
-            {
-                foreach(Tile tt in GetNextTile(t))
-                {
-                    if(tt != null) tiles.Add(tt);
-                }
-            }
-            if(tiles.Count == 0)
-            {
-                foreach(Tile t in GetAllShipShot(ia))
-                {
-                    foreach(Tile tt in AllNear(t))
-                    {
-                        if(Utility.Contains(tt, ia.FiringBoard.Tiles))
-                        {
-                            if(!ia.FiringBoard.Tiles[Index(tt,ia.FiringBoard.Tiles)].IsShot) tiles.Add(tt);
-                        }
-                    }
-                }
-            }
-            return tiles;
         }
     }
 }

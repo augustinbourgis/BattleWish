@@ -37,6 +37,14 @@ body > div.page > main > article > div{
 .validation-message {
     color: red;
 }
+.EndGif {
+    background-image: url(/img/battle-ship.gif);
+    background-position: center center;
+    min-height: 700px;
+    width: 100%;
+    background-size: 100%;
+    background-size: cover;
+}
 
 #blazor-error-ui {
     background: lightyellow;

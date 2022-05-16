@@ -41,17 +41,20 @@
             if (identification.Connected)
             {
                 <div class="nav-item px-3">
-                <NavLink class="nav-link" href="Game">
-                    <img src="/img/ship.svg" alt="Person" class="iconNavBar">
-                    <span class="oi" aria-hidden="true"></span> Game
-                </NavLink>
+                    <NavLink class="nav-link" href="Game">
+                        <img src="/img/ship.svg" alt="Person" class="iconNavBar">
+                        <span class="oi" aria-hidden="true"></span> Game
+                    </NavLink>
                 </div>
+                if (identification.Game.IsFinished == true || identification.Game.Player == null)
+                {
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="Map">
                         <img src="/img/flag.svg" alt="Person" class="iconNavBar">
                         <span class="oi" aria-hidden="true"></span> Map
                     </NavLink>
                 </div>
+                }
                 <div class="nav-item px-3">
                     <NavLink class="nav-link" href="PersonalSpace">
                         <img src="/img/chest.svg" alt="Person" class="iconNavBar">

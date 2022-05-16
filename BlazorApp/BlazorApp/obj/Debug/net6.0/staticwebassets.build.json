@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "W/u/TQ2VKotB3Rg0rS8EBmDJY/f/XpLnFU+ZgZrYdY4=",
+  "Hash": "UiesWuHX0RwQICW8CTOJVqudjKJBOwVOIoucKUiXG90=",
   "Source": "BlazorApp",
   "BasePath": "_content/BlazorApp",
   "Mode": "Default",
@@ -408,6 +408,23 @@
       "OriginalItemSpec": "wwwroot\\img\\background3.jpg"
     },
     {
+      "Identity": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\battle-ship.gif",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/battle-ship.gif",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\battle-ship.gif"
+    },
+    {
       "Identity": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\chest.svg",
       "SourceId": "BlazorApp",
       "SourceType": "Discovered",
@@ -474,6 +491,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\img\\ocean-sea.svg"
+    },
+    {
+      "Identity": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\PirateHat.svg",
+      "SourceId": "BlazorApp",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\",
+      "BasePath": "_content/BlazorApp",
+      "RelativePath": "img/PirateHat.svg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\img\\PirateHat.svg"
     },
     {
       "Identity": "C:\\Users\\Augus\\OneDrive\\Documents\\CNAM\\BattleWish\\BlazorApp\\BlazorApp\\wwwroot\\img\\RegistrationLogInBackground.svg",

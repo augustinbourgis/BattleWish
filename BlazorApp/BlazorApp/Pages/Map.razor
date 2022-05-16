@@ -8,7 +8,7 @@
 
 Etat connexion : @identification.Connected
 @{
-    if (identification.Connected)
+    if (identification.Connected && (identification.Game.IsFinished == true || identification.Game.Player == null))
     {
         <button class="btn btn-primary" @onclick="Reset">Reset me</button>
         <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>

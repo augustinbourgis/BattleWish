@@ -1,0 +1,36 @@
+﻿@page "/End"
+@using DataLibrary
+@using BlazorApp.Controller.Ships
+@inject IDataAccess _data
+@inject IConfiguration _config
+@inject Identification identification
+@inject NavigationManager NavManager
+
+<div class="EndGif">
+    <button class="btn btn-primary" @onclick="Reset">Play again ?</button>
+</div>
+
+@code {
+    protected override void OnInitialized() // = On Page Load
+    {
+        InsertUser();
+    }
+
+    public void Reset()
+    {
+        identification.Game.Player.GameBoard.GenerateTiles();
+        identification.Game.Ia = new IA();
+        identification.Game.Player.GenerateShips();
+        NavManager.NavigateTo("/Map");
+    }
+
+    private bool VictoryForPlayer { get; set; }
+
+    private async Task InsertUser()
+    {
+        VictoryForPlayer = identification.Game.Ia.HasLost;
+        string sql = "insert into history (IALevel, VictoryForPlayer, IAShoot, PlayerShoot, Begin, End, PlayerPseudo) values (@IALevel, @VictoryForPlayer, @IAShoot, @PlayerShoot, @Begin, @End, @PlayerPseudo);";
+
+        await _data.SaveData(sql, new { IALevel = identification.Game.Difficuty, VictoryForPlayer = VictoryForPlayer, IAShoot = identification.Game.IaShootAmount, PlayerShoot = identification.Game.PlayerShootAmount, Begin = identification.Game.Start, End = identification.Game.End, PlayerPseudo = identification.Login}, _config.GetConnectionString("default"));
+    }
+}

@@ -117,5 +117,11 @@ namespace BlazorApp.Tests
             Assert.AreEqual(Utility.Index(ShipFactory.Titanic(TileFactory.Tile(8,8)), list), -1);
         }
         #endregion
+
+        [TestMethod]
+        public void AllNear_ThenCount8()
+        {
+            Assert.IsTrue(8 == Utility.AllNear(new Tile(-5, 6)).Count);
+        }
     }
 }

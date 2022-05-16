@@ -22,8 +22,8 @@
         }
     </style>
     <p>Game difficulty : @identification.Game.Difficuty</p>
-     <button @onclick="MyShips"class="btn btn-primary">My ships</button>
-      <button @onclick="IaShips"class="btn btn-primary">Small peepee mode.</button>
+    <button @onclick="MyShips"class="btn btn-primary">My ships</button>
+    <button @onclick="IaShips"class="btn btn-primary">Small peepee mode.</button>
     @if (identification.Game.IsFinished)
     {
         NavManager.NavigateTo("/End");

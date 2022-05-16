@@ -69,7 +69,7 @@ namespace BlazorApp.Tests
             Ship s = ShipFactory.Carrier();
             GameBoard gb = GameBoardFactory.GameBoard();
             gb.Tiles[Utility.Index(s.Near[5], gb.Tiles)].OccupationType = Occupation.Near;
-            Assert.IsFalse(gb.AddNear(s));
+            Assert.IsTrue(gb.AddNear(s));
         }
         #endregion AddNear
 

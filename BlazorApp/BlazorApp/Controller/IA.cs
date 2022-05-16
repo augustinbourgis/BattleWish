@@ -76,7 +76,7 @@ namespace BlazorApp.Controller
                 }
                 if(attempt < 0)
                 {
-                    return false;
+                    return PlaceShipsRandomly();
                 }
             }
             return true;

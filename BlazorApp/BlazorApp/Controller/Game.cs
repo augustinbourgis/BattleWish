@@ -10,6 +10,8 @@ namespace BlazorApp.Controller
         public Player Player { get; set; }
         public IA Ia { get; set; }
         public bool IsPlayerTurn { get; set; }
+        public int PlayerShootAmount { get; set; } = 0;
+        public int IaShootAmount { get; set; } = 0;
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public bool IsFinished { get; set; }
@@ -26,6 +28,7 @@ namespace BlazorApp.Controller
 
         public bool PlayerShoot(int x, int y)
         {
+            PlayerShootAmount++;
             Player.FiringBoard.Tiles[Utility.Index(new Tile(x,y), Ia.GameBoard.Tiles)].IsShot = true;
             IsPlayerTurn = Player.FiringBoard.Tiles[Utility.Index(new Tile(x, y), Ia.GameBoard.Tiles)].IsABoat();
             Ship target = GetIaShip(new Tile(x, y));
@@ -39,37 +42,7 @@ namespace BlazorApp.Controller
             return true;
         }
 
-        public bool IaShoot()
-        {
-            bool isABoat;
-            int x = Utility.Random(0, Player.GameBoard.Width);
-            int y = Utility.Random(0, Player.GameBoard.Height);
-            if(IANextTiles.Count > 0 && Difficuty == Difficulties.MOYEN)
-            {
-                x = IANextTiles[0].X;
-                y = IANextTiles[0].Y;
-            }
-            if(Ia.FiringBoard.Tiles[Utility.Index(new Tile(x, y), Ia.FiringBoard.Tiles)].IsShot)
-            {
-                return IaShoot();
-            }
-            Ia.FiringBoard.Tiles[Utility.Index(GetTileNotShotYet(), Ia.FiringBoard.Tiles)].IsShot = true;
-            isABoat = Ia.FiringBoard.Tiles[Utility.Index(new Tile(x, y), Ia.FiringBoard.Tiles)].IsABoat();
-            IANextTiles = FilteredOkTiles(Utility.GetNextTileToShoot(Ia));
-            IsPlayerTurn = !isABoat;
-            if (Ia.HasLost || Player.HasLost)
-            {
-                IsFinished = true;
-                End = DateTime.Now;
-            }
-            if (!IsPlayerTurn)
-            {
-                IsPlayerTurn = IaShoot();
-            }
-            return IsPlayerTurn;
-        }
-
-        public List<Tile> GetShipTilesShot()
+       public List<Tile> GetShipTilesShot()
         {
             var tiles = new List<Tile>();
             foreach(Tile tile in Ia.FiringBoard.Tiles)
@@ -317,36 +290,7 @@ namespace BlazorApp.Controller
             if (VerifyTopLeftTileIsProbAShip(t) != null) tiles.Add(VerifyTopLeftTileIsProbAShip(t));
             return tiles;
         }
-
-        public List<Tile> FilteredOkTiles(List<Tile> list)
-        {
-            List<Tile> news = new List<Tile>();
-            foreach (Tile t in list)
-            {
-                if (!Utility.Contains(t, GetDoNotShootTilesForIA()))
-                {
-                    news.Add(t);
-                }
-            }
-            return news;
-        }
-
-        public Tile GetTileNotShotYet()
-        {
-            if(Difficuty == Difficulties.MOYEN && IANextTiles.Count > 0)
-            {
-                return IANextTiles[0];
-            }
-            int x = Utility.Random(0, Player.GameBoard.Width);
-            int y = Utility.Random(0, Player.GameBoard.Height);
-            Tile tile = TileFactory.Tile(x, y);
-            if (tile.IsShot)
-            {
-                return GetTileNotShotYet();
-            }
-            return tile;
-        }
-
+        
         public List<Tile> GetTilesNotShotYet()
         {
             List<Tile> tiles = new List<Tile>();
@@ -372,29 +316,6 @@ namespace BlazorApp.Controller
                             }
                         }
                     }
-                }
-            }
-            return tiles;
-        }
-
-        public List<Tile> GetDoNotShootTilesForIA()
-        {
-            List<Tile> tiles = new List<Tile>();
-            foreach(Ship s in Ia.FiringBoard.Ships)
-            {
-                if (s.IsSunk())
-                {
-                    foreach(Tile t in s.Tiles)
-                    {
-                        tiles.Add(t);
-                    }
-                }
-            }
-            foreach (Tile t in Ia.FiringBoard.Tiles)
-            {
-                if (t.IsShot)
-                {
-                    if(!Utility.Contains(t,tiles)) tiles.Add(t);
                 }
             }
             return tiles;
