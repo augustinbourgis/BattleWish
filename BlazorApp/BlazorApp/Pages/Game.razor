@@ -3,12 +3,13 @@
 @using BlazorApp.Controller.Factory
 @inject NavigationManager NavManager
 @inject Identification identification
+@inject IModalService modal
+@inject NavigationManager NavManager
 
 <h3>Game</h3>
 
 @if (identification.Player != null)
 {
-    @message
     <style>
         .tile {
             background: red;
@@ -20,31 +21,31 @@
             font-size: 0.8em;
         }
     </style>
+    <p>Game difficulty : @identification.Game.Difficuty</p>
+     <button @onclick="MyShips"class="btn btn-primary">My ships</button>
+      <button @onclick="IaShips"class="btn btn-primary">Small peepee mode.</button>
+    @if (identification.Game.IsFinished)
+    {
+        NavManager.NavigateTo("/End");
+    }
+    @if (identification.Game.IsPlayerTurn)
+    {
+        <button @onclick="PlayerPlay"class="btn btn-primary">Enter Coordinate</button>
+    }
+    @if (!identification.Game.IsPlayerTurn)
+    {
+        <button @onclick="IaPlay"class="btn btn-primary">Makes Ia Play</button>
+    }
     <div class="container">
         <div class="row">
             <div class="col">
-                <p>Your board : </p>
-                @((MarkupString)Debug(identification.Player.GameBoard))
+                <p>You :</p>
+                @((MarkupString)DrawFiring(identification.Player.FiringBoard))
             </div>
             <div class="col">
-                <p>Ennemy board :</p>
-                @((MarkupString)Rebug())
+                <p>IA :</p>
+                @((MarkupString)DrawFiring(identification.Ia.FiringBoard))
             </div>
-        </div>
-        <div class="row">
-            <div class="col">
-                <p>IA board : </p>
-                @((MarkupString)Ia.Debug())
-            </div>
-            <div class="col">
-                <p>Ennemy board :</p>
-                @((MarkupString)Rebug())
-            </div>
-        </div>
-        <div class="row">
-            <input @bind="X" placeholder="0"/>
-            <input @bind="Y" placeholder="0"/>
-            <button class="btn btn-primary" @onclick="Shoot">SHOOT</button>
         </div>
     </div>
 }
@@ -52,23 +53,32 @@
 @code {
     public string X;
     public string Y;
-    private string message;
-    public IA Ia = new IA();
 
-    public void Shoot()
+    public void MyShips()
     {
-        Tile t = TileFactory.Tile(int.Parse(X), int.Parse(Y));
-        if (!Utility.Contains(t, identification.Player.FiringBoard.Tiles))
+        modal.Show<MyShips>("Modal Popup Example");
+    }
+
+    public void IaShips()
+    {
+        modal.Show<IaShips>("Modal Popup Example");
+    }
+
+    public void IaPlay()
+    {
+        identification.Game.IsPlayerTurn = identification.Game.IaShoot2();
+        this.StateHasChanged();
+        if (identification.Game.IsFinished)
         {
-            message = "Coordinate not valid";
-        }
-        else
-        {
-            identification.Player.FiringBoard.Tiles[Utility.Index(t, identification.Player.FiringBoard.Tiles)].OccupationType = Occupation.Battleship;
+            NavManager.NavigateTo("/End");
         }
     }
 
-
+    public void PlayerPlay()
+    {
+        modal.Show<Coordinate>("Modal Popup Example");
+        this.StateHasChanged();
+    }
 
     public string Debug(GameBoard gb)
     {
@@ -104,47 +114,46 @@
         return temp;
     }
 
-    public string Rebug()
+    public string DrawFiring(GameBoard f)
     {
-        string temp = "<div class=\"container\" style=\"width: 800px; flex-wrap: nowrap; \">";
+        string temp = "<div class=\"container\" style=\"width: 750px\">";
         int index = 0;
-        for(int h = 0; h < identification.Player.FiringBoard.Height; h++)
+        for(int h = 0; h < f.Height; h++)
         {
             temp += "<div class=\"row\">";
-            for(int w = 0; w < identification.Player.FiringBoard.Width; w++)
+            for(int w = 0; w < f.Width; w++)
             {
-                index = w * identification.Player.FiringBoard.Width + h;
+                index = w * f.Width + h;
                 string color = "";
-                if(identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Empty)
+                if(f.Tiles[index].IsShot)
                 {
-                    color = "background-color: red;";
-                }
-                else
-                {
-                    if (identification.Player.FiringBoard.Tiles[index].OccupationType == Occupation.Near)
-                    {
-                        color = "background-color: blue;";
-                    }
-                    else
+                    color = "background-color: purple;";
+                    if (f.Tiles[index].IsABoat())
                     {
                         color = "background-color: green;";
                     }
                 }
-                if(identification.Player.FiringBoard.Tiles[index].OccupationType != Occupation.Empty)
+                else
                 {
-                    color = "background-color: blue;";
+                    color = "background-color: red;";
                 }
-                Tile t = identification.Player.FiringBoard.Tiles[index];
-                string toShow = "";
-                if (t.OccupationType == Occupation.Empty)
-                {
-                    toShow = t.X + "/" + t.Y;
+                string content = "";
+                if(f.Tiles[index].IsShot){
+                    if (f.Tiles[index].IsABoat())
+                    {
+                        content = Utility.DescriptionAttr(f.Tiles[index].OccupationType);
+                    }
+                    else
+                    {
+                        content = "";
+                    }
                 }
                 else
                 {
-                    toShow = Utility.DescriptionAttr(t.OccupationType);
+                    Tile t = f.Tiles[index];
+                    content = $"{t.X}/{t.Y}";
                 }
-                temp += $"<div class=\"col tile\" >{toShow}</div>";
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:50px\">{content}</div>";
             }
             temp += "</div>";
         }

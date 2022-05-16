@@ -10,16 +10,11 @@ namespace BlazorApp.Controller
         public int Width { get; set; }
         public int Height { get; set; }
         public int Boats { get; set; }
+        public List<Ship> Ships { get; set; } = new List<Ship>();
 
-        public GameBoard(int w, int h)
-        {
-            Width = w;
-            Height = h;
-        }
-
-        // TEST
         public int GenerateTiles()
         {
+            Tiles = new List<Tile>();
             if (Width <= 0 || Height <= 0) return -1;
 
             for(int w = 0; w < Width; w++)
@@ -33,7 +28,6 @@ namespace BlazorApp.Controller
             return Tiles.Count;
         }
 
-        // TEST
         public bool Add(Ship s)
         {
             GameBoard save = this;
@@ -54,11 +48,13 @@ namespace BlazorApp.Controller
             }
             AddNear(s);
             Boats++;
+            Ships.Add(s);
             return true;
         }
 
         public bool AddNear(Ship s)
         {
+            var save = Tiles;
             foreach (Tile t in s.Near)
             {
                 if (Utility.Contains(t, Tiles))
@@ -67,45 +63,32 @@ namespace BlazorApp.Controller
                     {
                         Tiles[Utility.Index(t, Tiles)] = t;
                     }
+                    else if(Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Near)
+                    {
+                        Tiles = save;
+                        return false;
+                    }
                 }
             }
-
             return true;
         }
 
-        public bool Right(Ship s)
+        public bool Rotate(Ship s, Orientation? o = null)
         {
             Ship save = (Ship)s.Clone();
             Remove(s);
-            s.Right();
-            if (IsAddable(s))
+            save.Rotate(o);
+            if (IsAddable(save))
             {
-                Add(s);
-                return true;
-            }
-            s = save;
-            Add(save);
-            return false;
-        }
-
-        public bool Rotate(Ship s)
-        {
-            Ship save = (Ship)s.Clone();
-            Remove(s);
-            s.OrientationType = Utility.NextOrientation(s.OrientationType);
-            s.GenerateTiles();
-            if (IsAddable(s))
-            {
+                s.Rotate(o);
                 Add(s);
                 return true;
             }
             else
             {
-                s = save;
-                s.GenerateTiles();
-                Add(save);
+                Add(s);
+                return false;
             }
-            return false;
         }
 
         public bool IsAddable(Ship s)
@@ -137,59 +120,79 @@ namespace BlazorApp.Controller
             return true;
         }
 
-        // TEST
-        public bool Left(Ship s)
-        {
-            Ship save = (Ship)s.Clone();
-            Remove(s);
-            s.Left();
-            if (IsAddable(s))
-            {
-                Add(s);
-                return true;
-            }
-            Add(save);
-            return false;
-        }
-
-        // TEST
+        #region Direction
         public bool Top(Ship s)
         {
             Ship save = (Ship)s.Clone();
             Remove(s);
-            s.Top();
-            if (IsAddable(s))
+            save.Top();
+            if (IsAddable(save))
             {
+                s.Top();
                 Add(s);
                 return true;
             }
-            Add(save);
+            Add(s);
             return false;
         }
 
-        // TEST
+        public bool Right(Ship s)
+        {
+            Ship save = (Ship)s.Clone();
+            Remove(s);
+            save.Right();
+            if (IsAddable(save))
+            {
+                s.Right();
+                Add(s);
+                return true;
+            }
+            Add(s);
+            return false;
+        }
+
         public bool Bottom(Ship s)
         {
             Ship save = (Ship)s.Clone();
             Remove(s);
-            s.Bottom();
-            if (IsAddable(s))
+            save.Bottom();
+            if (IsAddable(save))
             {
+                s.Bottom();
                 Add(s);
                 return true;
             }
-            Add(save);
+            Add(s);
             return false;
         }
 
-        // TEST
+        public bool Left(Ship s)
+        {
+            Ship save = (Ship)s.Clone();
+            Remove(s);
+            save.Left();
+            if (IsAddable(save))
+            {
+                s.Left();
+                Add(s);
+                return true;
+            }
+            Add(s);
+            return false;
+        }
+        #endregion Direction
+
         public Boolean Remove(Ship s)
         {
+            if (!Ships.Contains(s)) return false;
             foreach (Tile t in s.Tiles)
             {
                 if (Utility.Contains(t, Tiles))
                 {
-                    Tiles[Utility.Index(t, Tiles)] = TileFactory.Tile(t.X, t.Y);
+                    if(Tiles[Utility.Index(t,Tiles)].OccupationType != Occupation.Near)
+                    {
+                        Tiles[Utility.Index(t, Tiles)] = TileFactory.Tile(t.X, t.Y);
+                    }
                 }
                 else
                 {
@@ -200,11 +203,36 @@ namespace BlazorApp.Controller
             {
                 if (Utility.Contains(t, Tiles))
                 {
-                    Tiles[Utility.Index(t, Tiles)] = TileFactory.Tile(t.X, t.Y);
+                    if (Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Empty)
+                    {
+                        if ((Tiles[Utility.Index(t, Tiles)].OccupationType != Occupation.Near)) 
+                        {
+                            Tiles[Utility.Index(t, Tiles)] = TileFactory.Tile(t.X, t.Y);
+                        }
+                        else
+                        {
+                            bool nearBoat = false;
+                            foreach (Tile tt in Utility.AllNear(Tiles[Utility.Index(t, Tiles)]))
+                            {
+                                if (!Utility.Contains(tt, s.Tiles))
+                                {
+                                    if(Utility.Contains(tt, Tiles))
+                                    {
+                                        if(Tiles[Utility.Index(tt, Tiles)].IsABoat())
+                                        {
+                                            nearBoat = true;
+                                        }
+                                    }
+                                }
+                            }
+                            if (!nearBoat) Tiles[Utility.Index(t, Tiles)] = TileFactory.Tile(t.X, t.Y);
+                        }
+                    }
                 }
             }
 
             Boats--;
+            Ships.Remove(s);
             return true;
         }
 

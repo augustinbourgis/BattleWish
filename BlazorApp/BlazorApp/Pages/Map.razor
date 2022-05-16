@@ -1,14 +1,20 @@
-﻿@page "/Map2"
+﻿@page "/Map"
 @using BlazorApp.Controller.Enums;
 @using BlazorApp.Controller.Factory;
 @using BlazorApp.Controller.Ships;
+@using BlazorApp.Controller;
 
 @inject Identification identification
+@inject NavigationManager NavManager
 
 Etat connexion : @identification.Connected
 @{
     if (identification.Connected)
     {
+        <button class="btn btn-primary" @onclick="Reset">Reset me</button>
+        <p>Difficulty chose : @Utility.DescriptionAttr(Diff)</p>
+        <button class="btn btn-primary" @onclick="SetDifficultyEasy">Difficulty EZ</button>
+        <button class="btn btn-primary" @onclick="SetDifficultyMedium">Difficulty Medium</button>
         <style>
             div{
                 font-size: 0.8em;
@@ -24,20 +30,25 @@ Etat connexion : @identification.Connected
                 @s.OrientationType
             </div>
         }
-        <p>@gb.Boats placed</p>
-        if (gb.Boats == 6)
+        <p>@Placed.Count placed</p>
+        if (Placed.Count == 6)
         {
             <button class="btn btn-primary" id="aa" @onclick="Validate">Validate</button>
         }
         @message
         <div>
-            <button class="btn btn-primary" id="aa" @onclick="actionTest">Click me</button>
+            <button class="btn btn-primary" id="aa" @onclick="Spawn">Click me</button>
             <button class="btn btn-primary" @onclick="Right">🡢</button>
             <button class="btn btn-primary" @onclick="Bottom">🡣</button>
             <button class="btn btn-primary" @onclick="Left">🡠</button>
             <button class="btn btn-primary" @onclick="Top">🡡</button>
-            <button class="btn btn-primary" @onclick="Rotate">Rotate</button>
-            <button class="btn btn-primary" @onclick="Reset">Reset</button>
+            <br>
+            <button class="btn btn-primary" @onclick="Rotate">Next Rotate</button>
+            <button class="btn btn-primary" @onclick="VerticalRotate">Vertical Rotate</button>
+            <button class="btn btn-primary" @onclick="HorizonthalRotate">Horizonthal Rotate</button>
+            <button class="btn btn-primary" @onclick="DiagBRRotate">Diag BR Rotate</button>
+            <button class="btn btn-primary" @onclick="DiagTRRotate">Diag TR Rotate</button>
+
         </div>
         <div>
             <button class="btn btn-primary" @onclick="Destroyer">Destroyer</button>
@@ -47,126 +58,217 @@ Etat connexion : @identification.Connected
             <button class="btn btn-primary" @onclick="Carrier">Carrier</button>
             <button class="btn btn-primary" @onclick="Titanic">Titanic</button>
         </div>
-        @((MarkupString)@Debug())
+        @((MarkupString)@Draw())
     }
 }
 
 
 @code{
     public Ship s { get; set; }
-    public string message = "";
     public static Player p = PlayerFactory.Player();
-    public List<Ship> placed = new List<Ship>();
+    public string message = "";
+    public List<Ship> Placed = new List<Ship>();
     public GameBoard gb { get; set; } = p.GameBoard;
+    public Difficulties Diff { get; set; } = Difficulties.FACILE;
 
-    public void Reset()
+    public void VerticalRotate()
     {
-        gb.GenerateTiles();
-        gb.Boats = 0;
+        if (s == null) return;
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.VERTICAL))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void HorizonthalRotate()
+    {
+        if (s == null) return;
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.HORIZONTHAL))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void DiagBRRotate()
+    {
+        if (s == null) return;
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.DIAG_BR))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void DiagTRRotate()
+    {
+        if (s == null) return;
+        Orientation save = s.OrientationType;
+        if (!gb.Rotate(s,Orientation.DIAG_TR))
+        {
+            message = "Rotate not permitted";
+            s.GenerateTiles();
+            s.GenerateNear();
+        }
+        else
+        {
+            Spawn();
+        }
+    }
+
+    public void SetDifficultyEasy()
+    {
+        Diff = Difficulties.FACILE;
+    }
+
+    public void SetDifficultyMedium()
+    {
+        Diff = Difficulties.MOYEN;
     }
 
     public void Validate()
     {
-        identification.Player = PlayerFactory.Player(identification.Login);
-        identification.Player.GameBoard = gb;
-        message = "Validation completed !";
+        p.Ships = Placed;
+        identification.Player = p;
+        identification.Player.FiringBoard = identification.Ia.GameBoard;
+        identification.Ia.FiringBoard = identification.Player.GameBoard;
+        identification.Game.Player = p;
+        identification.Game.Difficuty = Diff;
+        identification.Difficulty = Diff;
+        NavManager.NavigateTo("/Game");
     }
 
-    public void Right()
+    public void Reset()
     {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Right(s))
-        {
-            message = "Right not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-
+        p.GameBoard.GenerateTiles();
+        Placed = new List<Ship>();
+        gb = p.GameBoard;
+        identification.Ia = new IA();
+        p.GenerateShips();
+        Draw();
     }
 
-    public void Left()
+    #region Movements
+    public void Move(string dir)
     {
-        message = "";
-        Ship save = s.Clone("");
-        if (!gb.Left(s))
+        if(s == null)
         {
-            message = "Left not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-
-            s = save;
+            return;
         }
-        actionTest();
-
+        if (dir != "spawn")
+        {
+            if (!Placed.Contains(s))
+            {
+                message = "Boat not placed !";
+                return;
+            }
+        }
+        bool ok = false;
+        GameBoard tempGB = (GameBoard)gb.Clone();
+        Ship tempShip = (Ship)s.Clone();
+        if (dir == "spawn")
+        {
+            if (Placed.Contains(s))
+            {
+                gb.Remove(s);
+                gb.Add(s);
+                return;
+            }
+            if (!tempGB.IsAddable(tempShip))
+            {
+                message = dir + " not allowed !";
+                return;
+            }
+        }
+        tempGB.Remove(tempShip);
+        tempShip = tempShip.Direction(dir);
+        gb.Remove(s);
+        Placed.Remove(s);
+        if (tempGB.IsAddable(tempShip))
+        {
+            s = s.Direction(dir);
+            ok = true;
+        }
+        else
+        {
+            message = dir + " not allowed !";
+        }
+        if (dir == "spawn" && !ok)
+        {
+            DrawWithPlaced();
+            return;
+        }
+        Placed.Add(s);
+        gb.Add(s);
+        DrawWithPlaced();
     }
 
-    public void Top()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Top(s))
-        {
-            message = "Top not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-
-    }
+    public void Right(){ Move("right"); }
+    public void Top(){ Move("top"); }
+    public void Bottom(){ Move("bottom"); }
+    public void Left(){ Move("left"); }
 
     public void Rotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s))
         {
             message = "Rotate not permitted";
-            s.OrientationType = save;
             s.GenerateTiles();
         }
-        actionTest();
-    }
-
-    public void Refresh()
-    {
-        gb.GenerateTiles();
-        foreach (Ship s in placed)
+        else
         {
-            gb.Remove(s);
-            gb.Add(s);
+            Spawn();
+        }
+    }
+    #endregion Movements
+
+    #region Drawings
+    public void DrawWithPlaced()
+    {
+        foreach (Ship s in Placed)
+        {
+            foreach (Tile t in s.Near)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+            foreach (Tile t in s.Tiles)
+            {
+                if (Utility.Contains(t, gb.Tiles))
+                {
+                    Tile tt = gb.Tiles[Utility.Index(t, gb.Tiles)];
+                    tt.OccupationType = t.OccupationType;
+                }
+            }
+
         }
     }
 
-    public void Bottom()
-    {
-        Ship save = s.Clone("");
-        message = "";
-        if (!gb.Bottom(s))
-        {
-            message = "Bottom not permitted";
-            p.Ships.Remove(s);
-            p.Ships.Add(save);
-            gb.Remove(s);
-            gb.Remove(save);
-            placed.Remove(s);
-            s = save;
-        }
-        actionTest();
-    }
-
-    public string Debug()
+    public string Draw()
     {
         string temp = "<div class=\"container\" style=\"width: 800px\">";
         int index = 0;
@@ -200,48 +302,51 @@ Etat connexion : @identification.Connected
         temp += "</div>";
         return temp;
     }
+    #endregion Drawings
 
-    public void actionTest()
+    #region Spawners
+    public void Spawn()
     {
-        gb.Add(s);
-        if (!Utility.Contains(s, placed)) placed.Add(s);
-        Refresh();
+        if (s == null) return;
+        Move("spawn");
+        s.GenerateTiles();
+        s.GenerateNear();
     }
 
     public void Destroyer()
     {
         s = Get("BlazorApp.Controller.Ships.Destroyer");
-        actionTest();
+        Spawn();
     }
 
     public void Cruiser()
     {
         s = Get("BlazorApp.Controller.Ships.Cruiser");
-        actionTest();
+        Spawn();
     }
 
     public void Submarine()
     {
         s = Get("BlazorApp.Controller.Ships.Submarine");
-        actionTest();
+        Spawn();
     }
 
     public void Battleship()
     {
         s = Get("BlazorApp.Controller.Ships.Battleship");
-        actionTest();
+        Spawn();
     }
 
     public void Carrier()
     {
         s = Get("BlazorApp.Controller.Ships.Carrier");
-        actionTest();
+        Spawn();
     }
 
     public void Titanic()
     {
         s = Get("BlazorApp.Controller.Ships.Titanic");
-        actionTest();
+        Spawn();
     }
 
     public Ship Get(string type)
@@ -255,4 +360,5 @@ Etat connexion : @identification.Connected
         }
         return null;
     }
+    #endregion Spawners
 }

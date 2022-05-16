@@ -1,6 +1,7 @@
 ﻿using BlazorApp.Controller;
 using BlazorApp.Controller.Enums;
 using BlazorApp.Controller.Factory;
+using BlazorApp.Controller.Ships;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace BlazorApp.Tests
@@ -112,7 +113,8 @@ namespace BlazorApp.Tests
         [TestMethod]
         public void Index_Ship_WithShipNotInList_ThenMinus1()
         {
-            Assert.AreEqual(Utility.Index(ShipFactory.Titanic(TileFactory.Tile(8,8)), PlayerFactory.Player().Ships), -1);
+            List<Ship> list = new List<Ship>();
+            Assert.AreEqual(Utility.Index(ShipFactory.Titanic(TileFactory.Tile(8,8)), list), -1);
         }
         #endregion
     }

@@ -1,0 +1,12 @@
+﻿@page "/Refresher"
+
+@inject NavigationManager NavManager
+
+<h3>Refresher</h3>
+
+@code {
+    protected override void OnInitialized() // = On Page Load
+    {
+        NavManager.NavigateTo("/Game");
+    }
+}

@@ -12,6 +12,10 @@ a, .btn-link {
     color: #0077cc;
 }
 
+body > div.page > main > article > div{
+    max-width: 1600px !important;
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;

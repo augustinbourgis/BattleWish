@@ -10,6 +10,16 @@
 @inject IConfiguration _config
 @inject NavigationManager NavManager
 
+<div>
+    <p>Enter your login :</p>
+    <input type="text" @bind="@identification.Login" @oninput="OnInputLogin"/>
+    <p>Enter your password</p>
+    <input type="password" @bind="@identification.Password" @oninput="OnInputPass"/>
+</div>
+@if(identification.Game != null)
+{
+    <p>identification.Game.Ia.GameBoard.Ships.Count</p>
+}
 <link href="/css/LogIn.css" rel="stylesheet" />
 
 <div class="container">

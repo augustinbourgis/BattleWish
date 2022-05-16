@@ -1,0 +1,44 @@
+﻿@using BlazorApp.Controller.Enums
+@inject Identification identification
+@inject IJSRuntime JsRuntime
+@inject IModalService modal  
+@inject NavigationManager NavManager
+
+<h3>Coordinate</h3>
+<p>@message</p>
+<label>X Coord : </label>
+<input @bind="X" type="number" min="0" max="@identification.Game.Player.FiringBoard.Width-1" step="1"/>
+<label>Y Coord : </label>
+<input @bind="Y" type="number" min="0" max="@identification.Game.Player.FiringBoard.Height-1" step="1"/>
+
+<button @onclick="Validate">Validate</button>
+
+@code {
+    private int X;
+    private int Y;
+    private string message;
+
+    public bool Verify()
+    {
+        var gb = identification.Game.Player.FiringBoard;
+        if(Utility.Contains(new Tile(X,Y), gb.Tiles))
+        {
+            int index = Utility.Index(new Tile(X, Y), gb.Tiles);
+            if (gb.Tiles[index].IsShot)
+            {
+                message = "Déjà fait chef !";
+                return false;
+            }
+        }
+        message = "";
+        return true;
+    }
+
+    public void Validate()
+    {
+        if (!Verify()) return;
+        identification.Game.IsPlayerTurn = identification.Game.PlayerShoot(X, Y);
+        NavManager.NavigateTo("/Refresher");
+        this.StateHasChanged();
+    }
+}

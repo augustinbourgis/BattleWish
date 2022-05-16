@@ -1,11 +1,18 @@
-﻿namespace BlazorApp.Controller
+﻿using BlazorApp.Controller.Enums;
+
+namespace BlazorApp.Controller
 {
     using System;
     using System.ComponentModel.DataAnnotations;
     public class Identification
     {
-        public Player? Current { get; set; }
-        public Player? Player;
+        public Player Current { get; set; }
+        public string Login;
+        public string Password;
+        public Player Player;
+        public Game Game;
+        public Difficulties Difficulty = Difficulties.FACILE;
+        public IA Ia { get; set; }
 
         [Required]
         [StringLength(20, ErrorMessage = "Login too long (20 character limit).")]
@@ -30,6 +37,8 @@
             Login = null;
             Password = null;
             Current = null;
+            Ia = null;
+            Game = null;
             return !Connected;
         }
     }

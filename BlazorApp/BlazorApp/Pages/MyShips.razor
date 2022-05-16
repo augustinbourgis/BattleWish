@@ -1,0 +1,48 @@
+﻿@page "/MyShips"
+@using BlazorApp.Controller.Enums;
+@using BlazorApp.Controller.Factory;
+@using BlazorApp.Controller.Ships;
+
+@inject Identification identification
+
+@((MarkupString)Draw())
+
+
+@code{
+
+    public string Draw()
+    {
+        GameBoard gb = identification.Game.Player.GameBoard;
+        string temp = "<div class=\"container\" style=\"width: 800px\">";
+        int index = 0;
+        for(int h = 0; h < gb.Height; h++)
+        {
+            temp += "<div class=\"row\">";
+            for(int w = 0; w < gb.Width; w++)
+            {
+                index = w * gb.Width + h;
+                string color = "background-color: red;";
+                if(gb.Tiles[index].OccupationType == Occupation.Empty)
+                {
+                    color = "background-color: red;";
+                }
+                else
+                {
+                    if (gb.Tiles[index].OccupationType == Occupation.Near)
+                    {
+                        color = "background-color: blue;";
+                    }
+                    else
+                    {
+                        color = "background-color: green;";
+                    }
+                }
+                Tile t = gb.Tiles[index];
+                temp += $"<div class=\"col\" style=\"{color}justify-content: center;display: flex;border: 1px solid;height:25px\">{t.X}/{t.Y}</div>";
+            }
+            temp += "</div>";
+        }
+        temp += "</div>";
+        return temp;
+    }
+}

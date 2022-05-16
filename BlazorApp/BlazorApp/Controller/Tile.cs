@@ -8,15 +8,29 @@ namespace BlazorApp.Controller
         public int Y { get; set; }
         public Occupation OccupationType { get; set; }
 
+        public bool IsShot { get; set; }
+
         public Tile(int x, int y)
         {
             X = x;
             Y = y;
         }
 
+        // TEST
         public bool Available()
         {
             return OccupationType == Occupation.Empty;
+        }
+        
+
+        public bool IsABoat()
+        {
+            return OccupationType == Occupation.Destroyer ||
+                    OccupationType == Occupation.Battleship ||
+                    OccupationType == Occupation.Titanic ||
+                    OccupationType == Occupation.Carrier ||
+                    OccupationType == Occupation.Cruiser ||
+                    OccupationType == Occupation.Submarine;
         }
 
         #region Directions

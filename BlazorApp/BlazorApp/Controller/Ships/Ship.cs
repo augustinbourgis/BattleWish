@@ -13,51 +13,54 @@ namespace BlazorApp.Controller.Ships
         public int Hits { get; set; }
         public Occupation OccupationType { get; set; }
         public Orientation OrientationType { get; set; }
-        public Placement PlacementType { get; set; }
-
-        public bool IsPlaced()
-        {
-            return PlacementType == Placement.Validate;
-        }
+        public bool IsPlaced { get; set; }
 
         public bool IsSunk()
         {
             return Hits >= Width;
         }
 
-        // TEST
+        #region Direction
+        public Ship Direction(string dir)
+        {
+            switch (dir.ToLower())
+            {
+                case "right":
+                    return this.Right();
+                case "left": return this.Left();
+                case "top": return this.Top();
+                case "bottom": return this.Bottom();
+                case "spawn": return this;
+                default: return null;
+            }
+        }
         public Ship Right()
         {
             TopLeft = TopLeft.Right();
             GenerateTiles();
             return this;
         }
-
-        // TEST
         public Ship Left()
         {
             TopLeft = TopLeft.Left();
             GenerateTiles();
             return this;
         }
-
-        // TEST
         public Ship Top()
         {
             TopLeft = TopLeft.Top();
             GenerateTiles();
             return this;
         }
-
-        // TEST
         public Ship Bottom()
         {
             TopLeft = TopLeft.Bottom();
             GenerateTiles();
             return this;
         }
+        #endregion Direction
 
-
+        #region Generation of tiles
         public int GenerateTiles()
         {
             Tiles = new List<Tile>();
@@ -90,20 +93,6 @@ namespace BlazorApp.Controller.Ships
             return Tiles.Count;
         }
 
-        public Ship Direction(string dir)
-        {
-            switch (dir)
-            {
-                case "right": 
-                    return this.Right();
-                case "left": return this.Left();
-                case "top": return this.Top();
-                case "bottom": return this.Bottom();
-                case "spawn": return this;
-                default: return null;
-            }
-        }
-
         public int GenerateNear()
         {
             Near = new List<Tile>();
@@ -120,6 +109,20 @@ namespace BlazorApp.Controller.Ships
             }
             return Near.Count;
         }
+        #endregion Generation of tiles
+
+        // Test
+        public Ship Rotate(Orientation? o = null)
+        {
+            if (o == null)
+            {
+                o = Utility.NextOrientation(OrientationType);
+            }
+            OrientationType = o.Value;
+            GenerateTiles();
+            GenerateNear();
+            return this;
+        }
 
         public object Clone()
         {
@@ -129,11 +132,6 @@ namespace BlazorApp.Controller.Ships
                 prop.SetValue(newShip, prop.GetValue(this));
             }
             return newShip;
-        }
-
-        public Ship Clone(string s)
-        {
-            return (Ship)this.Clone();
         }
     }
 }
