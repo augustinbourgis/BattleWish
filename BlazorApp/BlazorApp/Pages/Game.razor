@@ -23,9 +23,10 @@
     </style>
     <p>Game difficulty : @identification.Game.Difficuty</p>
      <button @onclick="MyShips"class="btn btn-primary">My ships</button>
+      <button @onclick="IaShips"class="btn btn-primary">Small peepee mode.</button>
     @if (identification.Game.IsFinished)
     {
-        NavManager.NavigateTo("/LogIn");
+        NavManager.NavigateTo("/End");
     }
     @if (identification.Game.IsPlayerTurn)
     {
@@ -58,10 +59,19 @@
         modal.Show<MyShips>("Modal Popup Example");
     }
 
+    public void IaShips()
+    {
+        modal.Show<IaShips>("Modal Popup Example");
+    }
+
     public void IaPlay()
     {
-        identification.Game.IsPlayerTurn = identification.Game.IaShoot();
+        identification.Game.IsPlayerTurn = identification.Game.IaShoot2();
         this.StateHasChanged();
+        if (identification.Game.IsFinished)
+        {
+            NavManager.NavigateTo("/End");
+        }
     }
 
     public void PlayerPlay()

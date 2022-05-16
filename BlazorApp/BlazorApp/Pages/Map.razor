@@ -73,6 +73,7 @@ Etat connexion : @identification.Connected
 
     public void VerticalRotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s,Orientation.VERTICAL))
         {
@@ -88,6 +89,7 @@ Etat connexion : @identification.Connected
 
     public void HorizonthalRotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s,Orientation.HORIZONTHAL))
         {
@@ -103,6 +105,7 @@ Etat connexion : @identification.Connected
 
     public void DiagBRRotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s,Orientation.DIAG_BR))
         {
@@ -118,6 +121,7 @@ Etat connexion : @identification.Connected
 
     public void DiagTRRotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s,Orientation.DIAG_TR))
         {
@@ -158,6 +162,7 @@ Etat connexion : @identification.Connected
         p.GameBoard.GenerateTiles();
         Placed = new List<Ship>();
         gb = p.GameBoard;
+        identification.Ia = new IA();
         p.GenerateShips();
         Draw();
     }
@@ -165,6 +170,10 @@ Etat connexion : @identification.Connected
     #region Movements
     public void Move(string dir)
     {
+        if(s == null)
+        {
+            return;
+        }
         if (dir != "spawn")
         {
             if (!Placed.Contains(s))
@@ -220,6 +229,7 @@ Etat connexion : @identification.Connected
 
     public void Rotate()
     {
+        if (s == null) return;
         Orientation save = s.OrientationType;
         if (!gb.Rotate(s))
         {
@@ -297,6 +307,7 @@ Etat connexion : @identification.Connected
     #region Spawners
     public void Spawn()
     {
+        if (s == null) return;
         Move("spawn");
         s.GenerateTiles();
         s.GenerateNear();

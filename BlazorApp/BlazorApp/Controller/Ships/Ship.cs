@@ -13,6 +13,7 @@ namespace BlazorApp.Controller.Ships
         public int Hits { get; set; }
         public Occupation OccupationType { get; set; }
         public Orientation OrientationType { get; set; }
+        public bool IsPlaced { get; set; }
 
         public bool IsSunk()
         {

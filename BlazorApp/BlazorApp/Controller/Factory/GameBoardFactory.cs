@@ -11,7 +11,7 @@
             }
             else
             {
-                 board = new GameBoard() { Height = 12, Width = 12 };
+                 board = new GameBoard() { Height = 8, Width = 8 };
             }
             board.GenerateTiles();
             return board;

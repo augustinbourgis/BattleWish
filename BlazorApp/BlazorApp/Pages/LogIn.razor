@@ -9,6 +9,10 @@
     <p>Enter your password</p>
     <input type="password" @bind="@identification.Password" @oninput="OnInputPass"/>
 </div>
+@if(identification.Game != null)
+{
+    <p>identification.Game.Ia.GameBoard.Ships.Count</p>
+}
 
 <button class="btn btn-primary" @onclick="IdentificationConnect">Connect</button>
 <button class="btn btn-primary" @onclick="IdentificationDisconnect">Disconnect</button>
