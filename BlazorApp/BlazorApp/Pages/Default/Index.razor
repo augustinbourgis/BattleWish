@@ -10,40 +10,6 @@
 <PageTitle>Home</PageTitle>
 
 @code {
-    List<UserModel> user;
-
-    private async Task InsertData()
-    {
-        string sql = "insert into people (FirstName, LastName) values (@FirstName, @LastName);";
-
-        await _data.SaveData(sql, new { FirstName = "Billy", LastName = "Bob" }, _config.GetConnectionString("default"));
-
-        await OnInitializedAsync();
-    }
-
-    private async Task UpdateData()
-    {
-        string sql = "update people set FirstName = @FirstName where LastName = @LastName";
-
-        await _data.SaveData(sql, new { FirstName = "Timothy", LastName = "Corey" }, _config.GetConnectionString("default"));
-
-        await OnInitializedAsync();
-    }
-
-    private async Task DeleteData()
-    {
-        string sql = "delete from people where LastName = @LastName";
-
-        await _data.SaveData(sql, new { LastName = "Bob" }, _config.GetConnectionString("default"));
-
-        await OnInitializedAsync();
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        string sql = "select * from user";
-
-        user = await _data.LoadData<UserModel, dynamic>(sql, new { }, _config.GetConnectionString("default"));
-    }
+    
 
 }
